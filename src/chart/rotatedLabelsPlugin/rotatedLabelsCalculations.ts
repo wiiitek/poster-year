@@ -64,7 +64,7 @@ export function calculateTextRotationAngle(middleAngle: number, perpendicular: b
   if (perpendicular) {
     rotationAngle += ROTATION_CONFIG.PERPENDICULAR_OFFSET;
   }
-  const shouldFlip = shouldFlipTextForReadability(rotationAngle);
+  const shouldFlip = shouldFlipTextForReadability(middleAngle);
   if (shouldFlip) {
     rotationAngle += ROTATION_CONFIG.TEXT_FLIP_ADJUSTMENT;
   }

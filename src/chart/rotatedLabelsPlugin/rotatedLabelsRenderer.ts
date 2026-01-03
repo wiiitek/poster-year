@@ -41,7 +41,7 @@ function renderLabel(
   context.save();
   context.translate(labelPosition.x, labelPosition.y);
 
-  const perpendicular = false;
+  const perpendicular = true;
   const rotationAngle = calculateTextRotationAngle(middleAngle, perpendicular);
   context.rotate(rotationAngle);
 
