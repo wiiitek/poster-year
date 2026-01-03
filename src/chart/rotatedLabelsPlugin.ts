@@ -159,7 +159,6 @@ function renderLabel(
   context.translate(labelPosition.x, labelPosition.y);
 
   const shouldFlip = shouldFlipTextForReadability(middleAngle);
-  console.log('label: ', configuration.text, 'shouldFlip:', shouldFlip, 'middleAngle:', middleAngle);
   const rotationAngle = calculateTextRotationAngle(middleAngle, shouldFlip);
   context.rotate(rotationAngle);
 
