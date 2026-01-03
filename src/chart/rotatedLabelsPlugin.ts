@@ -1,20 +1,11 @@
-import { Plugin, ArcElement, Element, ChartEvent, ActiveElement } from 'chart.js';
+import { Plugin, ArcElement, Element } from 'chart.js';
+import { calculateLabelPosition, LabelPosition, calculateTextRotationAngle } from './rotatedLabelsCalculations';
 import { seasons, months } from './chartData';
 
 // Constants for styling and positioning
 const LABEL_STYLE_CONFIG = {
   SEASON: { FONT: 'bold 18px Arial', COLOR: '#000' },
   MONTH: { FONT: 'bold 13px Arial', COLOR: '#000' },
-} as const;
-
-const ROTATION_CONFIG = {
-  // makes the label perpendicular to the radius
-  PERPENDICULAR_OFFSET: Math.PI / 2,
-  FLIP_THRESHOLD: {
-    MIN: Math.PI / 2,
-    MAX: (3 * Math.PI) / 2,
-  },
-  TEXT_FLIP_ADJUSTMENT: Math.PI,
 } as const;
 
 const DATASET_INDICES = { SEASONS: 0, MONTHS: 1 } as const;
@@ -28,71 +19,10 @@ interface ArcElementWithPosition extends ArcElement {
   outerRadius: number;
 }
 
-interface LabelPosition {
-  x: number;
-  y: number;
-}
-
 interface LabelConfiguration {
   text: string;
   font: string;
   color: string;
-}
-
-/**
- * Calculates the middle angle between start and end angles of an arc
- */
-function calculateMiddleAngle(startAngle: number, endAngle: number): number {
-  return (startAngle + endAngle) / 2;
-}
-
-/**
- * Calculates the middle radius between inner and outer radii
- */
-function calculateMiddleRadius(innerRadius: number, outerRadius: number): number {
-  return (innerRadius + outerRadius) / 2;
-}
-
-/**
- * Calculates the position where the label should be placed
- */
-function calculateLabelPosition(
-  centerX: number,
-  centerY: number,
-  angle: number,
-  radius: number
-): LabelPosition {
-  return {
-    x: centerX + Math.cos(angle) * radius,
-    y: centerY + Math.sin(angle) * radius,
-  };
-}
-
-/**
- * Determines if text should be flipped based on its angle to maintain readability.
- * Text should NOT be upside-down. We measure angles counter-clockwise.
- * 
- * param middleAngle - direction of a middle radius for an arc (in radians)
- * 
- * returns boolean - true if text should be flipped to be readable
- */
-function shouldFlipTextForReadability(middleAngle: number): boolean {
-  const north = 0;
-  const west = Math.PI / 2;
-  const south = Math.PI;
-
-  const quadrant2 = middleAngle >= north && middleAngle < west;
-  const quadrant3 = middleAngle >= west && middleAngle < south;
-
-  return quadrant2 || quadrant3;
-}
-
-function calculateTextRotationAngle(middleAngle: number, shouldFlip: boolean): number {
-  let rotationAngle = middleAngle + ROTATION_CONFIG.PERPENDICULAR_OFFSET;
-  if (shouldFlip) {
-    rotationAngle += ROTATION_CONFIG.TEXT_FLIP_ADJUSTMENT;
-  }
-  return rotationAngle;
 }
 
 function getLabelText(datasetIndex: number, elementIndex: number): string {
@@ -120,9 +50,6 @@ function createLabelConfiguration(
   };
 }
 
-/**
- * Applies text styling to the canvas context
- */
 function applyTextStyling(
   context: CanvasRenderingContext2D,
   configuration: LabelConfiguration
@@ -133,9 +60,6 @@ function applyTextStyling(
   context.fillStyle = configuration.color;
 }
 
-/**
- * Renders a single label on the chart
- */
 function renderLabel(
   context: CanvasRenderingContext2D,
   arcElement: ArcElementWithPosition,
@@ -145,21 +69,15 @@ function renderLabel(
     return;
   }
 
-  const middleAngle = calculateMiddleAngle(arcElement.startAngle, arcElement.endAngle);
-  const middleRadius = calculateMiddleRadius(arcElement.innerRadius, arcElement.outerRadius);
+  const middleAngle = (arcElement.startAngle + arcElement.endAngle) / 2;
+  const middleRadius = (arcElement.innerRadius + arcElement.outerRadius) / 2;
 
-  const labelPosition = calculateLabelPosition(
-    arcElement.x,
-    arcElement.y,
-    middleAngle,
-    middleRadius
-  );
+  const labelPosition: LabelPosition = calculateLabelPosition(arcElement.x, arcElement.y, middleAngle, middleRadius);
 
   context.save();
   context.translate(labelPosition.x, labelPosition.y);
 
-  const shouldFlip = shouldFlipTextForReadability(middleAngle);
-  const rotationAngle = calculateTextRotationAngle(middleAngle, shouldFlip);
+  const rotationAngle = calculateTextRotationAngle(middleAngle);
   context.rotate(rotationAngle);
 
   applyTextStyling(context, configuration);
