@@ -1,14 +1,7 @@
 import { Plugin, ArcProps } from 'chart.js';
 import { seasons, months } from './chartData';
 
-// Interface for chart data item
-export interface ChartDataItem {
-  label: string;
-  value: number;
-  color: string;
-}
-
-interface MyArcProps extends ArcProps {
+export interface MyArcProps extends ArcProps {
   x: number;
   y: number;
 }
@@ -24,7 +17,7 @@ export const rotatedLabelsPlugin: Plugin<'doughnut'> = {
       const meta = chart.getDatasetMeta(datasetIndex);
       
       meta.data.forEach((element, index) => {
-        const arc = element as unknown as MyArcProps;
+        const arc: MyArcProps = element as unknown as MyArcProps;
         
         const { x, y, startAngle, endAngle, innerRadius, outerRadius } = arc;
         const middleAngle = (startAngle + endAngle) / 2;
