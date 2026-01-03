@@ -21,6 +21,9 @@ const config: MyConfig = {
     filename: 'main.js',
     clean: true
   },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
   module: {
     rules: [
       {
