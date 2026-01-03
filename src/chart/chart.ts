@@ -7,7 +7,7 @@ import {
   ChartConfiguration,
 } from 'chart.js';
 import { seasons, months } from './chartData';
-import { rotatedLabelsPlugin } from './rotatedLabelsPlugin';
+import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin';
 
 // Register Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
