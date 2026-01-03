@@ -7,7 +7,7 @@ import {
   ChartConfiguration,
   Plugin,
 } from 'chart.js';
-import { chartData } from './chartData';
+import { seasons, months } from './chartData';
 
 // Register Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
@@ -44,20 +44,10 @@ const rotatedLabelsPlugin: Plugin<'doughnut'> = {
         let label = '';
         if (datasetIndex === 0) {
           // Inner dataset (seasons)
-          label = chartData[index].season;
+          label = seasons[index].label;
         } else {
           // Outer dataset (months)
-          let monthIndex = 0;
-          for (let i = 0; i < chartData.length; i++) {
-            for (let j = 0; j < chartData[i].months.length; j++) {
-              if (monthIndex === index) {
-                label = chartData[i].months[j].label;
-                break;
-              }
-              monthIndex++;
-            }
-            if (label) break;
-          }
+          label = months[index].label;
         }
         
         ctx.save();
@@ -101,23 +91,14 @@ const rotatedLabelsPlugin: Plugin<'doughnut'> = {
 };
 
 export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
-  // Prepare data for inner ring (seasons)
-  const seasonLabels = chartData.map((season) => season.season);
-  const seasonValues = chartData.map((season) =>
-    season.months.reduce((sum, month) => sum + month.value, 0)
-  );
-  const seasonColors = chartData.map((season) => season.color);
-
-  // Prepare data for outer ring (months)
-  const monthValues: number[] = [];
-  const monthColors: string[] = [];
-
-  chartData.forEach((season) => {
-    season.months.forEach((month) => {
-      monthValues.push(month.value);
-      monthColors.push(month.color);
-    });
-  });
+  // Extract data directly from flat arrays
+  const seasonLabels = seasons.map(s => s.label);
+  const seasonValues = seasons.map(s => s.value);
+  const seasonColors = seasons.map(s => s.color);
+  
+  const monthLabels = months.map(m => m.label);
+  const monthValues = months.map(m => m.value);
+  const monthColors = months.map(m => m.color);
 
   const config: ChartConfiguration<'doughnut'> = {
     type: 'doughnut',
@@ -158,18 +139,8 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
                 // Season tooltip
                 label = seasonLabels[context.dataIndex];
               } else {
-                // Month tooltip - need to calculate which month
-                let monthIndex = 0;
-                for (let i = 0; i < chartData.length; i++) {
-                  for (let j = 0; j < chartData[i].months.length; j++) {
-                    if (monthIndex === context.dataIndex) {
-                      label = chartData[i].months[j].label;
-                      break;
-                    }
-                    monthIndex++;
-                  }
-                  if (label) break;
-                }
+                // Month tooltip
+                label = monthLabels[context.dataIndex];
               }
               const value = context.parsed || 0;
               return `${label}: ${value} days`;
