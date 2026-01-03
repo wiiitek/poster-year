@@ -8,6 +8,7 @@ const LABEL_STYLE_CONFIG = {
 } as const;
 
 const ROTATION_CONFIG = {
+  // makes the label perpendicular to the radius
   PERPENDICULAR_OFFSET: Math.PI / 2,
   FLIP_THRESHOLD: {
     MIN: Math.PI / 2,
@@ -68,11 +69,22 @@ function calculateLabelPosition(
 }
 
 /**
- * Determines if text should be flipped based on its angle to maintain readability
+ * Determines if text should be flipped based on its angle to maintain readability.
+ * Text should NOT be upside-down. We measure angles counter-clockwise.
+ * 
+ * param middleAngle - direction of a middle radius for an arc (in radians)
+ * 
+ * returns boolean - true if text should be flipped to be readable
  */
-function shouldFlipTextForReadability(angle: number): boolean {
-  return angle > ROTATION_CONFIG.FLIP_THRESHOLD.MIN &&
-    angle < ROTATION_CONFIG.FLIP_THRESHOLD.MAX;
+function shouldFlipTextForReadability(middleAngle: number): boolean {
+  const north = 0;
+  const west = Math.PI / 2;
+  const south = Math.PI;
+
+  const quadrant2 = middleAngle >= north && middleAngle < west;
+  const quadrant3 = middleAngle >= west && middleAngle < south;
+
+  return quadrant2 || quadrant3;
 }
 
 function calculateTextRotationAngle(middleAngle: number, shouldFlip: boolean): number {
@@ -147,6 +159,7 @@ function renderLabel(
   context.translate(labelPosition.x, labelPosition.y);
 
   const shouldFlip = shouldFlipTextForReadability(middleAngle);
+  console.log('label: ', configuration.text, 'shouldFlip:', shouldFlip, 'middleAngle:', middleAngle);
   const rotationAngle = calculateTextRotationAngle(middleAngle, shouldFlip);
   context.rotate(rotationAngle);
 
