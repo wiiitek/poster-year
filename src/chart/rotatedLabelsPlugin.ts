@@ -1,4 +1,4 @@
-import { Plugin, ArcElement, ChartEvent, ActiveElement } from 'chart.js';
+import { Plugin, ArcElement, Element, ChartEvent, ActiveElement } from 'chart.js';
 import { seasons, months } from './chartData';
 
 // Constants for styling and positioning
@@ -186,10 +186,10 @@ function renderLabel(
 function renderDatasetLabels(
   context: CanvasRenderingContext2D,
   datasetIndex: number,
-  elements: ArcElement[]
+  elements: Element[]
 ): void {
   elements.forEach((element, elementIndex) => {
-    const arcElement = element as ArcElementWithPosition;
+    const arcElement = element as unknown as ArcElementWithPosition;
     const labelConfiguration = createLabelConfiguration(datasetIndex, elementIndex);
     
     renderLabel(context, arcElement, labelConfiguration);
