@@ -3,14 +3,8 @@ import { seasons, months } from './chartData';
 
 // Constants for styling and positioning
 const LABEL_STYLE_CONFIG = {
-  SEASON: {
-    FONT: 'bold 18px Arial',
-    COLOR: '#000',
-  },
-  MONTH: {
-    FONT: 'bold 13px Arial',
-    COLOR: '#000',
-  },
+  SEASON: { FONT: 'bold 18px Arial', COLOR: '#000' },
+  MONTH: { FONT: 'bold 13px Arial', COLOR: '#000' },
 } as const;
 
 const ROTATION_CONFIG = {
@@ -22,10 +16,7 @@ const ROTATION_CONFIG = {
   TEXT_FLIP_ADJUSTMENT: Math.PI,
 } as const;
 
-const DATASET_INDICES = {
-  SEASONS: 0,
-  MONTHS: 1,
-} as const;
+const DATASET_INDICES = { SEASONS: 0, MONTHS: 1 } as const;
 
 interface ArcElementWithPosition extends ArcElement {
   x: number;
@@ -45,7 +36,6 @@ interface LabelConfiguration {
   text: string;
   font: string;
   color: string;
-  shouldRotate: boolean;
 }
 
 /**
@@ -81,41 +71,28 @@ function calculateLabelPosition(
  * Determines if text should be flipped based on its angle to maintain readability
  */
 function shouldFlipTextForReadability(angle: number): boolean {
-  return angle > ROTATION_CONFIG.FLIP_THRESHOLD.MIN && 
-         angle < ROTATION_CONFIG.FLIP_THRESHOLD.MAX;
+  return angle > ROTATION_CONFIG.FLIP_THRESHOLD.MIN &&
+    angle < ROTATION_CONFIG.FLIP_THRESHOLD.MAX;
 }
 
-/**
- * Calculates the rotation angle for text to align with the arc
- */
-function calculateTextRotationAngle(middleAngle: number): number {
+function calculateTextRotationAngle(middleAngle: number, shouldFlip: boolean): number {
   let rotationAngle = middleAngle + ROTATION_CONFIG.PERPENDICULAR_OFFSET;
-  
-  if (shouldFlipTextForReadability(middleAngle)) {
+  if (shouldFlip) {
     rotationAngle += ROTATION_CONFIG.TEXT_FLIP_ADJUSTMENT;
   }
-  
   return rotationAngle;
 }
 
-/**
- * Gets the appropriate label text based on dataset index and element index
- */
 function getLabelText(datasetIndex: number, elementIndex: number): string {
   if (datasetIndex === DATASET_INDICES.SEASONS) {
     return seasons[elementIndex]?.label || '';
   }
-  
   if (datasetIndex === DATASET_INDICES.MONTHS) {
     return months[elementIndex]?.label || '';
   }
-  
   return '';
 }
 
-/**
- * Creates label configuration based on dataset type
- */
 function createLabelConfiguration(
   datasetIndex: number,
   elementIndex: number
@@ -123,12 +100,11 @@ function createLabelConfiguration(
   const text = getLabelText(datasetIndex, elementIndex);
   const isSeasonDataset = datasetIndex === DATASET_INDICES.SEASONS;
   const styleConfig = isSeasonDataset ? LABEL_STYLE_CONFIG.SEASON : LABEL_STYLE_CONFIG.MONTH;
-  
+
   return {
     text,
     font: styleConfig.FONT,
     color: styleConfig.COLOR,
-    shouldRotate: !isSeasonDataset, // Only rotate month labels
   };
 }
 
@@ -156,25 +132,24 @@ function renderLabel(
   if (!configuration.text) {
     return;
   }
-  
+
   const middleAngle = calculateMiddleAngle(arcElement.startAngle, arcElement.endAngle);
   const middleRadius = calculateMiddleRadius(arcElement.innerRadius, arcElement.outerRadius);
-  
+
   const labelPosition = calculateLabelPosition(
     arcElement.x,
     arcElement.y,
     middleAngle,
     middleRadius
   );
-  
+
   context.save();
   context.translate(labelPosition.x, labelPosition.y);
-  
-  if (configuration.shouldRotate) {
-    const rotationAngle = calculateTextRotationAngle(middleAngle);
-    context.rotate(rotationAngle);
-  }
-  
+
+  const shouldFlip = shouldFlipTextForReadability(middleAngle);
+  const rotationAngle = calculateTextRotationAngle(middleAngle, shouldFlip);
+  context.rotate(rotationAngle);
+
   applyTextStyling(context, configuration);
   context.fillText(configuration.text, 0, 0);
   context.restore();
@@ -191,7 +166,7 @@ function renderDatasetLabels(
   elements.forEach((element, elementIndex) => {
     const arcElement = element as unknown as ArcElementWithPosition;
     const labelConfiguration = createLabelConfiguration(datasetIndex, elementIndex);
-    
+
     renderLabel(context, arcElement, labelConfiguration);
   });
 }
@@ -201,7 +176,7 @@ function renderDatasetLabels(
  */
 export const rotatedLabelsPlugin: Plugin<'doughnut'> = {
   id: 'rotatedLabels',
-  
+
   afterDatasetsDraw(chart) {
     const context = chart.ctx;
     const datasets = chart.config.data.datasets;
