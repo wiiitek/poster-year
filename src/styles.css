@@ -21,6 +21,19 @@ body {
   position: relative;
 }
 
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+#myChart {
+  max-width: 90%;
+  max-height: 90%;
+}
+
 @page {
   size: A4 landscape;
   margin: 0;
