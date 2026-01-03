@@ -4,6 +4,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Configuration as WebpackConfiguration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 // Get __dirname equivalent in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,11 +16,12 @@ type MyConfig = WebpackConfiguration & {
 };
 
 const config: MyConfig = {
+  mode: isProduction ? 'production' : 'development',
   entry: './src/index.ts',
-  devtool: 'source-map',
+  devtool: isProduction ? 'source-map' : 'eval-source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
+    filename: isProduction ? '[name].[contenthash].js' : 'main.js',
     clean: true
   },
   resolve: {
@@ -41,6 +44,16 @@ const config: MyConfig = {
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),
   ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    compress: true,
+    port: 8765,
+    open: false,
+    hot: true,
+    watchFiles: ['src/**/*'],
+  },
 };
 
 export default config;
