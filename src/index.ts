@@ -1,5 +1,5 @@
 import './styles.css';
-import { initializeChart } from './chart';
+import { initializeChart } from './chart/chart';
 
 const rootElement = document.getElementById('root');
 if (rootElement) {

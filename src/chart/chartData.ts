@@ -1,4 +1,4 @@
-export interface ChartDataItem {
+export interface MonthData {
   label: string;
   value: number;
   color: string;
@@ -7,7 +7,7 @@ export interface ChartDataItem {
 export interface SeasonData {
   season: string;
   color: string;
-  months: ChartDataItem[];
+  months: MonthData[];
 }
 
 export const chartData: SeasonData[] = [
