@@ -22,7 +22,16 @@ const rotatedLabelsPlugin: Plugin<'doughnut'> = {
     datasets.forEach((dataset, datasetIndex) => {
       const meta = chart.getDatasetMeta(datasetIndex);
       
-      meta.data.forEach((arc: any, index) => {
+      meta.data.forEach((element, index) => {
+        const arc = element as unknown as {
+          x: number;
+          y: number;
+          startAngle: number;
+          endAngle: number;
+          innerRadius: number;
+          outerRadius: number;
+        };
+        
         const { x, y, startAngle, endAngle, innerRadius, outerRadius } = arc;
         const middleAngle = (startAngle + endAngle) / 2;
         const radius = (innerRadius + outerRadius) / 2;
@@ -31,8 +40,25 @@ const rotatedLabelsPlugin: Plugin<'doughnut'> = {
         const labelX = x + Math.cos(middleAngle) * radius;
         const labelY = y + Math.sin(middleAngle) * radius;
         
-        // Get label text
-        const label = chart.config.data.labels?.[index] as string;
+        // Get label text from the dataset's data
+        let label = '';
+        if (datasetIndex === 0) {
+          // Inner dataset (seasons)
+          label = chartData[index].season;
+        } else {
+          // Outer dataset (months)
+          let monthIndex = 0;
+          for (let i = 0; i < chartData.length; i++) {
+            for (let j = 0; j < chartData[i].months.length; j++) {
+              if (monthIndex === index) {
+                label = chartData[i].months[j].label;
+                break;
+              }
+              monthIndex++;
+            }
+            if (label) break;
+          }
+        }
         
         ctx.save();
         ctx.translate(labelX, labelY);
@@ -83,13 +109,11 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
   const seasonColors = chartData.map((season) => season.color);
 
   // Prepare data for outer ring (months)
-  const monthLabels: string[] = [];
   const monthValues: number[] = [];
   const monthColors: string[] = [];
 
   chartData.forEach((season) => {
     season.months.forEach((month) => {
-      monthLabels.push(month.label);
       monthValues.push(month.value);
       monthColors.push(month.color);
     });
@@ -98,7 +122,7 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
   const config: ChartConfiguration<'doughnut'> = {
     type: 'doughnut',
     data: {
-      labels: [...seasonLabels, ...monthLabels],
+      labels: seasonLabels,
       datasets: [
         {
           label: 'Seasons',
@@ -129,7 +153,24 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
           enabled: true,
           callbacks: {
             label: function (context) {
-              const label = context.label || '';
+              let label = '';
+              if (context.datasetIndex === 0) {
+                // Season tooltip
+                label = seasonLabels[context.dataIndex];
+              } else {
+                // Month tooltip - need to calculate which month
+                let monthIndex = 0;
+                for (let i = 0; i < chartData.length; i++) {
+                  for (let j = 0; j < chartData[i].months.length; j++) {
+                    if (monthIndex === context.dataIndex) {
+                      label = chartData[i].months[j].label;
+                      break;
+                    }
+                    monthIndex++;
+                  }
+                  if (label) break;
+                }
+              }
               const value = context.parsed || 0;
               return `${label}: ${value} days`;
             },
