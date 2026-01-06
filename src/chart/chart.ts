@@ -27,27 +27,30 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
     data: {
       labels: seasonLabels,
       datasets: [
-        {
-          label: 'Seasons',
-          data: seasonValues,
-          backgroundColor: seasonColors,
-          borderWidth: 2,
-          borderColor: '#fff',
-          weight: 1,
-        },
+        // ordered from outermost to innermost
         {
           label: 'Months',
           data: monthValues,
           backgroundColor: monthColors,
           borderWidth: 2,
           borderColor: '#fff',
-          weight: 1.5,
+          weight: 5.0,
+        },
+        {
+          label: 'Seasons',
+          data: seasonValues,
+          backgroundColor: seasonColors,
+          borderWidth: 2,
+          borderColor: '#fff',
+          weight: 3.0,
         },
       ],
     },
     options: {
       responsive: true,
       maintainAspectRatio: true,
+      // The portion of the chart that is cut out of the middle.
+      cutout: '35%',
       plugins: {
         legend: {
           display: false, // Hide legend since we have labels on chart
@@ -58,11 +61,11 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
             label: function (context) {
               let label = '';
               if (context.datasetIndex === 0) {
-                // Season tooltip
-                label = seasonLabels[context.dataIndex];
-              } else {
                 // Month tooltip
                 label = monthLabels[context.dataIndex];
+              } else {
+                // Season tooltip
+                label = seasonLabels[context.dataIndex];
               }
               const value = context.parsed || 0;
               return `${label}: ${value} days`;
