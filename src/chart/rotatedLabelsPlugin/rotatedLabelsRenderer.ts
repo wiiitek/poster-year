@@ -1,5 +1,6 @@
 import { ArcElement, Element } from 'chart.js';
-import { calculateLabelPosition, LabelPosition, calculateTextRotationAngle } from './rotatedLabelsCalculations';
+import { calculateLabelPosition, LabelPosition } from './rotatedLabelsPosition';
+import { calculateTextRotationAngle } from './rotatedLabelsRotation';
 import { createLabelConfiguration, LabelConfiguration } from './rotatedLabelsTextAndStyle';
 
 interface ArcElementWithPosition extends ArcElement {
