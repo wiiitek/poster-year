@@ -19,12 +19,13 @@ describe('rotatedLabelsRotation', () => {
       })
     })
 
+    // should simply add π/2, but also normalize it to be between -π and π
     describe('should normalize direction with perpendicular rotation', () => {
       it.each`
         description                       | middleAngle           | expected
-        ${'0 degrees (north)'}            | ${0}                  | ${-Math.PI / 2}
-        ${'45 degrees (northwest)'}       | ${Math.PI / 4}        | ${-Math.PI / 4}
-        ${'135 degrees (southwest)'}      | ${3 * Math.PI / 4}    | ${Math.PI / 4}
+        ${'0 degrees (north)'}            | ${0}                  | ${Math.PI / 2}
+        ${'45 degrees (northwest)'}       | ${Math.PI / 4}        | ${3 * Math.PI / 4}
+        ${'135 degrees (southwest)'}      | ${3 * Math.PI / 4}    | ${-3 * Math.PI / 4}
         ${'315 degrees (northeast)'}      | ${7 * Math.PI / 4}    | ${Math.PI / 4}
         ${'225 degrees (southeast)'}      | ${5 * Math.PI / 4}    | ${-Math.PI / 4}
       `('$description with perpendicular', ({ middleAngle, expected }) => {
