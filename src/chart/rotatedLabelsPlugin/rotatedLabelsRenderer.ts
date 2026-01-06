@@ -21,12 +21,13 @@ export function renderDatasetLabels(
     const arcElement = element as unknown as ArcElementWithPosition;
     const labelConfiguration = createLabelConfiguration(datasetIndex, elementIndex);
 
-    renderLabel(context, arcElement, labelConfiguration);
+    renderLabel(context, datasetIndex, arcElement, labelConfiguration);
   });
 }
 
 function renderLabel(
   context: CanvasRenderingContext2D,
+  datasetIndex: number,
   arcElement: ArcElementWithPosition,
   configuration: LabelConfiguration
 ): void {
@@ -42,7 +43,8 @@ function renderLabel(
   context.save();
   context.translate(labelPosition.x, labelPosition.y);
 
-  const perpendicular = true;
+  // only perpendicular index for the inner ring
+  const perpendicular = datasetIndex == 1;
   const rotationAngle = calculateTextRotationAngle(middleAngle, perpendicular);
   context.rotate(rotationAngle);
 

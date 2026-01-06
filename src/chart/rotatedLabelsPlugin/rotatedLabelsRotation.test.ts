@@ -7,10 +7,10 @@ describe('rotatedLabelsRotation', () => {
 
     describe('text directed same way as an arc', () => {
       it.each`
-        description                                          | middleAngle      | expected
-        ${'0 degrees should return the same angle (north)'}  | ${0}             | ${Math.PI}
-        ${'180 degrees should also return the same (south)'} | ${Math.PI}       | ${Math.PI}
-      `('should return same angle when no flip needed', ({ middleAngle, expected }) => {
+        description              | middleAngle      | expected
+        ${'0 degrees (north)'}   | ${0}             | ${0}
+        ${'180 degrees (south)'} | ${Math.PI}       | ${Math.PI}
+      `('$description', ({ middleAngle, expected }) => {
         const perpendicular = false;
         const result = calculateTextRotationAngle(middleAngle, perpendicular)
         expect(result).toBeCloseTo(expected)
