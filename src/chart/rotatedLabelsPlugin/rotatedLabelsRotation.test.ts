@@ -30,7 +30,7 @@ describe('rotatedLabelsRotation', () => {
         ${'225 degrees (southeast)'}      | ${5 * Math.PI / 4}    | ${-Math.PI / 4}
       `('$description with perpendicular', ({ middleAngle, expected }) => {
         const perpendicular = true;
-        let result = calculateTextRotationAngle(middleAngle, perpendicular)
+        const result = calculateTextRotationAngle(middleAngle, perpendicular)
         expect(result).toBeCloseTo(expected)
       })
     })
