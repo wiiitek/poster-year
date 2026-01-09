@@ -13,7 +13,8 @@
     "test:coverage": "vitest --coverage",
     "test:e2e": "playwright test",
     "test:report": "playwright show-report",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "keywords": [
     "a4",

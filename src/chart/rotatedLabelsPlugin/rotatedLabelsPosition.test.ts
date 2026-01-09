@@ -20,4 +20,4 @@ describe('rotatedLabelsPosition', () => {
       expect(result.y).toBeCloseTo(expectedY)
     })
   })
-});
+})
