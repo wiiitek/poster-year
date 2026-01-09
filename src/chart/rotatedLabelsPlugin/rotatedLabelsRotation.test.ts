@@ -31,10 +31,6 @@ describe('rotatedLabelsRotation', () => {
       `('$description with perpendicular', ({ middleAngle, expected }) => {
         const perpendicular = true;
         let result = calculateTextRotationAngle(middleAngle, perpendicular)
-        // normalizes result so that it is easier to compare (result should be between -π and π)
-        while (result > Math.PI) {
-          result -= (2 * Math.PI);
-        }
         expect(result).toBeCloseTo(expected)
       })
     })
