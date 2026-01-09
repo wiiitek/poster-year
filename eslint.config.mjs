@@ -15,4 +15,12 @@ export default defineConfig(
   },
   eslint.configs.recommended,
   tseslint.configs.recommended,
+  {
+    rules: {
+      // turn off the base Eslint rule
+      'semi': 'off',
+      // configure the other one to not allow for semicolons
+      '@/semi': ['error', 'never']
+    }
+  }
 );
