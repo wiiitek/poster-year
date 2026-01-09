@@ -5,22 +5,22 @@ import {
   Tooltip,
   Legend,
   ChartConfiguration,
-} from 'chart.js';
-import { seasons, months } from './chartData';
-import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin';
+} from 'chart.js'
+import { seasons, months } from './chartData'
+import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin'
 
 // Register Chart.js components
-Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
+Chart.register(DoughnutController, ArcElement, Tooltip, Legend)
 
 export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
   // Extract data directly from flat arrays
-  const seasonLabels = seasons.map(s => s.label);
-  const seasonValues = seasons.map(s => s.value);
-  const seasonColors = seasons.map(s => s.color);
+  const seasonLabels = seasons.map(s => s.label)
+  const seasonValues = seasons.map(s => s.value)
+  const seasonColors = seasons.map(s => s.color)
   
-  const monthLabels = months.map(m => m.label);
-  const monthValues = months.map(m => m.value);
-  const monthColors = months.map(m => m.color);
+  const monthLabels = months.map(m => m.label)
+  const monthValues = months.map(m => m.value)
+  const monthColors = months.map(m => m.color)
 
   const config: ChartConfiguration<'doughnut'> = {
     type: 'doughnut',
@@ -59,16 +59,16 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
           enabled: true,
           callbacks: {
             label: function (context) {
-              let label = '';
+              let label = ''
               if (context.datasetIndex === 0) {
                 // Month tooltip
-                label = monthLabels[context.dataIndex];
+                label = monthLabels[context.dataIndex]
               } else {
                 // Season tooltip
-                label = seasonLabels[context.dataIndex];
+                label = seasonLabels[context.dataIndex]
               }
-              const value = context.parsed || 0;
-              return `${label}: ${value} days`;
+              const value = context.parsed || 0
+              return `${label}: ${value} days`
             },
           },
         },
@@ -78,7 +78,7 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
       },
     },
     plugins: [rotatedLabelsPlugin],
-  };
+  }
 
-  return new Chart(canvasElement, config);
+  return new Chart(canvasElement, config)
 }

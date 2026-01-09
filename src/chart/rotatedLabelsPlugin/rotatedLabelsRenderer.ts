@@ -1,7 +1,7 @@
-import { ArcElement, Element } from 'chart.js';
-import { calculateLabelPosition, LabelPosition } from './rotatedLabelsPosition';
-import { calculateTextRotationAngle } from './rotatedLabelsRotation';
-import { createLabelConfiguration, LabelConfiguration } from './rotatedLabelsTextAndStyle';
+import { ArcElement, Element } from 'chart.js'
+import { calculateLabelPosition, LabelPosition } from './rotatedLabelsPosition'
+import { calculateTextRotationAngle } from './rotatedLabelsRotation'
+import { createLabelConfiguration, LabelConfiguration } from './rotatedLabelsTextAndStyle'
 
 interface ArcElementWithPosition extends ArcElement {
   x: number;
@@ -18,11 +18,11 @@ export function renderDatasetLabels(
   elements: Element[]
 ): void {
   elements.forEach((element, elementIndex) => {
-    const arcElement = element as unknown as ArcElementWithPosition;
-    const labelConfiguration = createLabelConfiguration(datasetIndex, elementIndex);
+    const arcElement = element as unknown as ArcElementWithPosition
+    const labelConfiguration = createLabelConfiguration(datasetIndex, elementIndex)
 
-    renderLabel(context, datasetIndex, arcElement, labelConfiguration);
-  });
+    renderLabel(context, datasetIndex, arcElement, labelConfiguration)
+  })
 }
 
 function renderLabel(
@@ -32,33 +32,33 @@ function renderLabel(
   configuration: LabelConfiguration
 ): void {
   if (!configuration.text) {
-    return;
+    return
   }
 
-  const middleAngle = (arcElement.startAngle + arcElement.endAngle) / 2;
-  const middleRadius = (arcElement.innerRadius + arcElement.outerRadius) / 2;
+  const middleAngle = (arcElement.startAngle + arcElement.endAngle) / 2
+  const middleRadius = (arcElement.innerRadius + arcElement.outerRadius) / 2
 
-  const labelPosition: LabelPosition = calculateLabelPosition(arcElement.x, arcElement.y, middleAngle, middleRadius);
+  const labelPosition: LabelPosition = calculateLabelPosition(arcElement.x, arcElement.y, middleAngle, middleRadius)
 
-  context.save();
-  context.translate(labelPosition.x, labelPosition.y);
+  context.save()
+  context.translate(labelPosition.x, labelPosition.y)
 
   // only perpendicular index for the inner ring
-  const perpendicular = datasetIndex == 1;
-  const rotationAngle = calculateTextRotationAngle(middleAngle, perpendicular);
-  context.rotate(rotationAngle);
+  const perpendicular = datasetIndex == 1
+  const rotationAngle = calculateTextRotationAngle(middleAngle, perpendicular)
+  context.rotate(rotationAngle)
 
-  applyTextStyling(context, configuration);
-  context.fillText(configuration.text, 0, 0);
-  context.restore();
+  applyTextStyling(context, configuration)
+  context.fillText(configuration.text, 0, 0)
+  context.restore()
 }
 
 function applyTextStyling(
   context: CanvasRenderingContext2D,
   configuration: LabelConfiguration
 ): void {
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
-  context.font = configuration.font;
-  context.fillStyle = configuration.color;
+  context.textAlign = 'center'
+  context.textBaseline = 'middle'
+  context.font = configuration.font
+  context.fillStyle = configuration.color
 }

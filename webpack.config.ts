@@ -1,14 +1,14 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { Configuration as WebpackConfiguration } from 'webpack';
-import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import path from 'path'
+import { fileURLToPath } from 'url'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import type { Configuration as WebpackConfiguration } from 'webpack'
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server'
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 // Get __dirname equivalent in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // extends configuration type with devServer property
 type MyConfig = WebpackConfiguration & {
@@ -54,6 +54,6 @@ const config: MyConfig = {
     hot: true,
     watchFiles: ['src/**/*'],
   },
-};
+}
 
-export default config;
+export default config

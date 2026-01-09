@@ -1,14 +1,14 @@
-import './styles.css';
-import { initializeChart } from './chart/chart';
+import './styles.css'
+import { initializeChart } from './chart/chart'
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById('root')
 if (rootElement) {
-  console.info('Root element found:', rootElement);
+  console.info('Root element found:', rootElement)
 }
 
 // Initialize the chart
-const canvasElement = document.getElementById('myChart') as HTMLCanvasElement;
+const canvasElement = document.getElementById('myChart') as HTMLCanvasElement
 if (canvasElement) {
-  initializeChart(canvasElement);
-  console.info('Chart initialized');
+  initializeChart(canvasElement)
+  console.info('Chart initialized')
 }

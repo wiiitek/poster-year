@@ -22,5 +22,5 @@ export function calculateLabelPosition(
   return {
     x: centerX + Math.cos(middleAngle) * middleRadius,
     y: centerY + Math.sin(middleAngle) * middleRadius,
-  };
+  }
 }
