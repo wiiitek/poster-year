@@ -1,0 +1,5 @@
+# ignore anything except the dist folder, README, and this very file
+/*
+!/dist/
+!README.md
+!.gitignore
