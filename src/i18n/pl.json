@@ -1,11 +1,13 @@
 {
     "seasons": {
+        "term": "Pory roku",
         "spring": "Wiosna",
         "summer": "Lato",
         "autumn": "Jesień",
         "winter": "Zima"
     },
     "months": {
+        "term": "Miesiące",
         "january": "Styczeń",
         "february": "Luty",
         "march": "Marzec",

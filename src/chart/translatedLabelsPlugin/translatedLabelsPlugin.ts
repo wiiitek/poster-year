@@ -41,6 +41,14 @@ export const translatedLabelsPlugin: Plugin<'doughnut'> = {
 }
 
 const translateLabels = (i18n: I18N, chart: Chart<"doughnut", number[], Label[]>) => {
+  // translate terms for datasets
+  chart.data.datasets.forEach((dataset) => {
+    const isParsingAnObject = typeof dataset.parsing === 'object'
+    const key = isParsingAnObject ? (dataset.parsing as any).translationKey : null;
+    const translatedTerm = key ? i18n.t(key) : ''
+    dataset.label = translatedTerm
+  })
+
   // updates data and replace month names with correct localized names
   const monthValues: Label[] = chart.data.labels?.[0] || []
   const translatedMonths = monthValues.map(label => ({ key: label.key, translation: i18n.t(label.key) }))

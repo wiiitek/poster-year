@@ -33,7 +33,8 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
       datasets: [
         // ordered from outermost to innermost
         {
-          label: 'Months',
+          parsing: { translationKey: 'months.term' },
+          label: 'months.term',
           data: monthValues,
           backgroundColor: monthColors,
           borderWidth: 2,
@@ -41,7 +42,8 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
           weight: 5.0,
         },
         {
-          label: 'Seasons',
+          parsing: { translationKey: 'seasons.term' },
+          label: 'seasons.term',
           data: seasonValues,
           backgroundColor: seasonColors,
           borderWidth: 2,
