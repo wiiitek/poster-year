@@ -48,12 +48,12 @@ const translateLabels = (i18n: I18N, chart: Chart<"doughnut", number[], Label[]>
     const translatedTerm = key ? i18n.t(key) : ''
     dataset.label = translatedTerm
   })
-
-  // updates data and replace month names with correct localized names
-  const monthValues: Label[] = chart.data.labels?.[0] || []
-  const translatedMonths = monthValues.map(label => ({ key: label.key, translation: i18n.t(label.key) }))
-  const seasonValues: Label[] = chart.data.labels?.[1] || []
-  const translatedSeasons = seasonValues.map(label => ({ key: label.key, translation: i18n.t(label.key) }))
-  chart.data.labels = [translatedMonths, translatedSeasons]
+  // translate over multi-labels
+  const translatedMultiLabels: Label[][] = chart.data.labels!!.map((labels: Label[]) => {
+    return labels.map(label =>
+      ({ key: label.key, translation: i18n.t(label.key) })
+    )
+  })
+  chart.data.labels = translatedMultiLabels
   chart.update()
 }
