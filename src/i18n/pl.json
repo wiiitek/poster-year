@@ -1,8 +1,10 @@
 {
-    "spring": "Wiosna",
-    "summer": "Lato",
-    "autumn": "Jesień",
-    "winter": "Zima",
+    "seasons": {
+        "spring": "Wiosna",
+        "summer": "Lato",
+        "autumn": "Jesień",
+        "winter": "Zima"
+    },
     "months": {
         "january": "Styczeń",
         "february": "Luty",

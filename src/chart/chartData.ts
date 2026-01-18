@@ -1,9 +1,9 @@
 // Season data for inner ring
 export const seasons = [
-  { label: 'spring', value: 92, color: '#90EE90' },
-  { label: 'summer', value: 92, color: '#FFD700' },
-  { label: 'autumn', value: 91, color: '#FF8C00' },
-  { label: 'winter', value: 90, color: '#87CEEB' },
+  { label: 'seasons.spring', value: 92, color: '#90EE90' },
+  { label: 'seasons.summer', value: 92, color: '#FFD700' },
+  { label: 'seasons.autumn', value: 91, color: '#FF8C00' },
+  { label: 'seasons.winter', value: 90, color: '#87CEEB' },
 ]
 
 // Month data for outer ring
