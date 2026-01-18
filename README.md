@@ -15,3 +15,10 @@ npm start
 ```
 
 The page will be available at `http://localhost:8765`.
+
+## Rotating the Chart
+
+Chart can be rotated by pressing a key:
+
+* rotate left by pressing: `[`
+* and rotate right with: `]`

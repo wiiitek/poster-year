@@ -12,12 +12,12 @@ import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin'
 // Register Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend)
 
-export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
+export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughnut", number[], unknown> {
   // Extract data directly from flat arrays
   const seasonLabels = seasons.map(s => s.label)
   const seasonValues = seasons.map(s => s.value)
   const seasonColors = seasons.map(s => s.color)
-  
+
   const monthLabels = months.map(m => m.label)
   const monthValues = months.map(m => m.value)
   const monthColors = months.map(m => m.color)
@@ -80,5 +80,10 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart {
     plugins: [rotatedLabelsPlugin],
   }
 
-  return new Chart(canvasElement, config)
+  const chart = new Chart(canvasElement, config)
+  // rotate chart for nice animated effect
+  chart.options.rotation = (0)
+  chart.update()
+
+  return chart
 }
