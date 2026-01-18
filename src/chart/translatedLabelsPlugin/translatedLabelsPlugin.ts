@@ -6,6 +6,10 @@ import { Label } from '../Label'
 
 type I18N = typeof i18n;
 
+interface TermKey {
+  translationKey: string;
+}
+
 /**
  * Custom Chart.js plugin for labels translation
  */
@@ -44,12 +48,13 @@ const translateLabels = (i18n: I18N, chart: Chart<"doughnut", number[], Label[]>
   // translate terms for datasets
   chart.data.datasets.forEach((dataset) => {
     const isParsingAnObject = typeof dataset.parsing === 'object'
-    const key = isParsingAnObject ? (dataset.parsing as any).translationKey : null;
+    // Uses a map for dataset parsing to store our translationKey (see also chart dataset configuration)
+    const key = isParsingAnObject ? (dataset.parsing as unknown as TermKey).translationKey : null
     const translatedTerm = key ? i18n.t(key) : ''
     dataset.label = translatedTerm
   })
   // translate over multi-labels
-  const translatedMultiLabels: Label[][] = chart.data.labels!!.map((labels: Label[]) => {
+  const translatedMultiLabels: Label[][] = chart.data.labels!.map((labels: Label[]) => {
     return labels.map(label =>
       ({ key: label.key, translation: i18n.t(label.key) })
     )
