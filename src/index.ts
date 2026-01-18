@@ -11,4 +11,14 @@ const canvasElement = document.getElementById('myChart') as HTMLCanvasElement
 if (canvasElement) {
   initializeChart(canvasElement)
   console.info('Chart initialized')
+
+
+  // Add event listener for keypress events
+  document.addEventListener('keydown', (event: KeyboardEvent) => {
+    if (event.key === '-') {
+      console.log('Minus key (-) pressed')
+    } else if (event.key === '=') {
+      console.log('Equals key (=) pressed')
+    }
+  })
 }
