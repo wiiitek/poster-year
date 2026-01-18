@@ -23,7 +23,7 @@
   "devDependencies": {
     "@eslint/js": "9.39.2",
     "@playwright/test": "1.57.0",
-    "@types/node": "24.10.4",
+    "@types/node": "24.10.9",
     "@types/webpack": "5.28.5",
     "@types/webpack-dev-server": "4.7.2",
     "@vitest/ui": "4.0.17",
