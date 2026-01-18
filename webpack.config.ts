@@ -39,15 +39,29 @@ const config: MyConfig = {
         exclude: /node_modules/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.json$/,
+        resourceQuery: /i18n/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'i18n/[name][ext]',
+        },
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),
   ],
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
+    static: [
+      {
+        directory: path.join(__dirname, 'dist'),
+      },
+      {
+        directory: path.join(__dirname, 'src/i18n'),
+        publicPath: '/i18n',
+      },
+    ],
     compress: true,
     port: 8765,
     open: false,
