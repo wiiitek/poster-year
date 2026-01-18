@@ -5,31 +5,36 @@ import {
   Tooltip,
   Legend,
   ChartConfiguration,
+  TooltipItem,
 } from 'chart.js'
 import { seasons, months } from './chartData'
 import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin'
+import { translatedLabelsPlugin } from './translatedLabelsPlugin/translatedLabelsPlugin'
+import { Label } from './Label'
 
 // Register Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend)
 
-export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughnut", number[], unknown> {
+export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughnut", number[], Label[]> {
   // Extract data directly from flat arrays
-  const seasonLabels = seasons.map(s => s.label)
+  const seasonLabels = seasons.map(s => ({ key: s.label, translation: s.label }))
   const seasonValues = seasons.map(s => s.value)
   const seasonColors = seasons.map(s => s.color)
 
-  const monthLabels = months.map(m => m.label)
+  const monthLabels = months.map(m => ({ key: m.label, translation: m.label }))
   const monthValues = months.map(m => m.value)
   const monthColors = months.map(m => m.color)
 
-  const config: ChartConfiguration<'doughnut'> = {
+  const config: ChartConfiguration<"doughnut", number[], Label[]> = {
     type: 'doughnut',
     data: {
-      labels: seasonLabels,
+      // array of arrays: we need multilabels here to have array for each series of data
+      labels: [monthLabels, seasonLabels],
       datasets: [
         // ordered from outermost to innermost
         {
-          label: 'Months',
+          parsing: { translationKey: 'months.term' },
+          label: 'months.term',
           data: monthValues,
           backgroundColor: monthColors,
           borderWidth: 2,
@@ -37,7 +42,8 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
           weight: 5.0,
         },
         {
-          label: 'Seasons',
+          parsing: { translationKey: 'seasons.term' },
+          label: 'seasons.term',
           data: seasonValues,
           backgroundColor: seasonColors,
           borderWidth: 2,
@@ -58,15 +64,15 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
         tooltip: {
           enabled: true,
           callbacks: {
-            label: function (context) {
-              let label = ''
-              if (context.datasetIndex === 0) {
-                // Month tooltip
-                label = monthLabels[context.dataIndex]
-              } else {
-                // Season tooltip
-                label = seasonLabels[context.dataIndex]
-              }
+            // by default the title is taken from labels, but we have multilabels and need to overwrite default behaviour
+            title: function (items: TooltipItem<"doughnut">[]): string {
+              const context = items[0]
+              return context.dataset.label || ''
+            },
+            label: function (context: TooltipItem<"doughnut">): string {
+              const multiLabels = context.chart.data.labels
+              const seriesLabels = multiLabels ? multiLabels[context.datasetIndex] as Label[] : []
+              const label = seriesLabels[context.dataIndex]?.translation || ''
               const value = context.parsed || 0
               return `${label}: ${value} days`
             },
@@ -77,13 +83,11 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
         padding: 20,
       },
     },
-    plugins: [rotatedLabelsPlugin],
+    plugins: [
+      rotatedLabelsPlugin,
+      translatedLabelsPlugin,
+    ],
   }
 
-  const chart = new Chart(canvasElement, config)
-  // rotate chart for nice animated effect
-  chart.options.rotation = (0)
-  chart.update()
-
-  return chart
+  return new Chart<"doughnut", number[], Label[]>(canvasElement, config)
 }

@@ -1,4 +1,6 @@
 import { ArcElement, Element } from 'chart.js'
+
+import { Label } from '../Label'
 import { calculateLabelPosition, LabelPosition } from './rotatedLabelsPosition'
 import { calculateTextRotationAngle } from './rotatedLabelsRotation'
 import { createLabelConfiguration, LabelConfiguration } from './rotatedLabelsTextAndStyle'
@@ -13,13 +15,14 @@ interface ArcElementWithPosition extends ArcElement {
 }
 
 export function renderDatasetLabels(
+  multiLabels: Label[][],
   context: CanvasRenderingContext2D,
   datasetIndex: number,
   elements: Element[]
 ): void {
   elements.forEach((element, elementIndex) => {
     const arcElement = element as unknown as ArcElementWithPosition
-    const labelConfiguration = createLabelConfiguration(datasetIndex, elementIndex)
+    const labelConfiguration = createLabelConfiguration(multiLabels, datasetIndex, elementIndex)
 
     renderLabel(context, datasetIndex, arcElement, labelConfiguration)
   })

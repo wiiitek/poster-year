@@ -1,4 +1,6 @@
-import { Plugin } from 'chart.js'
+import { Chart, Plugin } from 'chart.js'
+
+import { Label } from '../Label'
 import { renderDatasetLabels } from './rotatedLabelsRenderer'
 
 /**
@@ -7,13 +9,15 @@ import { renderDatasetLabels } from './rotatedLabelsRenderer'
 export const rotatedLabelsPlugin: Plugin<'doughnut'> = {
   id: 'rotatedLabels',
 
-  afterDatasetsDraw(chart) {
+  afterDatasetsDraw(chart: Chart<"doughnut", number[], Label[]>) {
     const context = chart.ctx
     const datasets = chart.config.data.datasets
 
+    const multiLabels = chart.data.labels as Label[][]
+
     datasets.forEach((_, datasetIndex) => {
       const datasetMeta = chart.getDatasetMeta(datasetIndex)
-      renderDatasetLabels(context, datasetIndex, datasetMeta.data)
+      renderDatasetLabels(multiLabels, context, datasetIndex, datasetMeta.data)
     })
   },
 }
