@@ -1,0 +1,24 @@
+{
+    "seasons": {
+        "term": "Pory roku",
+        "spring": "Wiosna",
+        "summer": "Lato",
+        "autumn": "Jesień",
+        "winter": "Zima"
+    },
+    "months": {
+        "term": "Miesiące",
+        "january": "Styczeń",
+        "february": "Luty",
+        "march": "Marzec",
+        "april": "Kwiecień",
+        "may": "Maj",
+        "june": "Czerwiec",
+        "july": "Lipiec",
+        "august": "Sierpień",
+        "september": "Wrzesień",
+        "october": "Październik",
+        "november": "Listopad",
+        "december": "Grudzień"
+    }
+}
