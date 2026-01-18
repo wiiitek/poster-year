@@ -12,6 +12,12 @@ test.describe('Poster Screenshot Tests', () => {
     await page.waitForLoadState('networkidle')
     await page.waitForFunction(chartIsRendered)
 
+    // Rotates chart slightly left
+    for (let i = 0; i < 5; i++) {
+      await page.keyboard.press("[")
+      await page.waitForTimeout(50) // 50ms pause (adjust if needed)
+    }
+
     // Take a screenshot and compare to snapshot
     await expect(page).toHaveScreenshot('poster-page.png', {
       fullPage: true,
