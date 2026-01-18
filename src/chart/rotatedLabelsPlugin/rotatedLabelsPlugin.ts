@@ -1,6 +1,6 @@
 import { Chart, Plugin } from 'chart.js'
 
-import { Label } from '../chartLabels'
+import { Label } from '../Label'
 import { renderDatasetLabels } from './rotatedLabelsRenderer'
 
 /**

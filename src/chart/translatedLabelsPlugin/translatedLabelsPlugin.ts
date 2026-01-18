@@ -2,7 +2,7 @@ import { Chart, Plugin } from 'chart.js'
 import i18n from 'i18next'
 
 import { configureI18N } from '../../configureI18N'
-import { Label } from '../chartLabels'
+import { Label } from '../Label'
 
 type I18N = typeof i18n;
 

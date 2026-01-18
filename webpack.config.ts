@@ -40,14 +40,14 @@ const config: MyConfig = {
         exclude: /node_modules/,
         use: ['style-loader', 'css-loader'],
       },
-      {
-        test: /\.json$/,
-        resourceQuery: /i18n/,
-        type: 'asset/resource',
-        generator: {
-          filename: 'i18n/[name][ext]',
-        },
-      },
+      // {
+      //   test: /\.json$/,
+      //   resourceQuery: /i18n/,
+      //   type: 'asset/resource',
+      //   generator: {
+      //     filename: 'i18n/[name][ext]',
+      //   },
+      // },
     ],
   },
   plugins: [

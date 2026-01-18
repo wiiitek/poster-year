@@ -10,7 +10,7 @@ import {
 import { seasons, months } from './chartData'
 import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin'
 import { translatedLabelsPlugin } from './translatedLabelsPlugin/translatedLabelsPlugin'
-import { Label } from './chartLabels'
+import { Label } from './Label'
 
 // Register Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend)
@@ -62,10 +62,10 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
         tooltip: {
           enabled: true,
           callbacks: {
-            // by default the title is taken from labels, but we have multilabels so we override it to be correct
-            title: function (tooltipItems: TooltipItem<"doughnut">[]): string {
-              const tooltipItem = tooltipItems[0]
-              return tooltipItem.dataset.label || ''
+            // by default the title is taken from labels, but we have multilabels and need to overwrite default behaviour
+            title: function (items: TooltipItem<"doughnut">[]): string {
+              const context = items[0]
+              return context.dataset.label || ''
             },
             label: function (context: TooltipItem<"doughnut">): string {
               const multiLabels = context.chart.data.labels

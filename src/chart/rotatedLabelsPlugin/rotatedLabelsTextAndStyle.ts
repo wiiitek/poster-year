@@ -1,4 +1,4 @@
-import { Label } from "../chartLabels"
+import { Label } from "../Label"
 
 const DATASET_INDICES = { MONTHS: 0, SEASONS: 1 } as const
 
