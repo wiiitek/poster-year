@@ -1,6 +1,7 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyPlugin from 'copy-webpack-plugin'
 import type { Configuration as WebpackConfiguration } from 'webpack'
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server'
 
@@ -51,6 +52,11 @@ const config: MyConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'src/i18n', to: 'i18n' },
+      ],
+    }),
   ],
   devServer: {
     static: [
