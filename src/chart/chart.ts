@@ -13,7 +13,7 @@ import { translatedLabelsPlugin } from './translatedLabelsPlugin/translatedLabel
 // Register Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend)
 
-export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughnut", number[], string> {
+export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughnut", number[], string[]> {
   // Extract data directly from flat arrays
   const seasonLabels = seasons.map(s => s.label)
   const seasonValues = seasons.map(s => s.value)
@@ -23,10 +23,10 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
   const monthValues = months.map(m => m.value)
   const monthColors = months.map(m => m.color)
 
-  const config: ChartConfiguration<"doughnut", number[], string> = {
+  const config: ChartConfiguration<"doughnut", number[], string[]> = {
     type: 'doughnut',
     data: {
-      labels: seasonLabels,
+      labels: [monthLabels, seasonLabels],
       datasets: [
         // ordered from outermost to innermost
         {
@@ -84,5 +84,5 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
     ],
   }
 
-  return new Chart<"doughnut", number[], string>(canvasElement, config)
+  return new Chart<"doughnut", number[], string[]>(canvasElement, config)
 }
