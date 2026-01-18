@@ -15,7 +15,7 @@ export function configureI18N(): void {
             debug: true,
             fallbackLng: "en",
             backend: {
-                loadPath: "/locales/{{lng}}/translation.json"
+                loadPath: "/i18n/{{lng}}/translation.json"
             }
         })
 }

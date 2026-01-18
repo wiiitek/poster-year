@@ -8,6 +8,7 @@ import {
 } from 'chart.js'
 import { seasons, months } from './chartData'
 import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin'
+import { translatedLabelsPlugin } from './translatedLabelsPlugin/translatedLabelsPlugin'
 
 // Register Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend)
@@ -77,7 +78,10 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
         padding: 20,
       },
     },
-    plugins: [rotatedLabelsPlugin],
+    plugins: [
+      rotatedLabelsPlugin,
+      translatedLabelsPlugin,
+    ],
   }
 
   const chart = new Chart(canvasElement, config)
