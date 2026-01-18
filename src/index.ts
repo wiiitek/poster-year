@@ -14,7 +14,7 @@ if (canvasElement) {
 
   let rotationDegrees = 0
 
-  // Add event listener for keypress events
+  // Add event listener for chart rotation
   document.addEventListener('keydown', (event: KeyboardEvent) => {
     if (event.key === '[') {
       rotationDegrees -= 6
