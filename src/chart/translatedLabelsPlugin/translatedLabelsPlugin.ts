@@ -12,9 +12,11 @@ export const translatedLabelsPlugin: Plugin<'doughnut'> = {
 
     configureI18N();
     i18n.on("initialized", () => {
+      const currentLanguage = i18n.language
+      console.info(`i18n initialized, current language: ${currentLanguage}`)
       // update dataset and replace month names with correct localized names
-      chart.data.labels = chart.data.labels?.map(label => i18n.t(label)) || [];
-      //chart.update();
+      chart.data.labels = chart.data.labels?.map(label => i18n.t(label)) || []
+      chart.update();
     });
 
   }
