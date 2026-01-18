@@ -13,7 +13,7 @@ import { translatedLabelsPlugin } from './translatedLabelsPlugin/translatedLabel
 // Register Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend)
 
-export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughnut", number[], unknown> {
+export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughnut", number[], string> {
   // Extract data directly from flat arrays
   const seasonLabels = seasons.map(s => s.label)
   const seasonValues = seasons.map(s => s.value)
@@ -23,7 +23,7 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
   const monthValues = months.map(m => m.value)
   const monthColors = months.map(m => m.color)
 
-  const config: ChartConfiguration<'doughnut'> = {
+  const config: ChartConfiguration<"doughnut", number[], string> = {
     type: 'doughnut',
     data: {
       labels: seasonLabels,
@@ -84,7 +84,7 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
     ],
   }
 
-  const chart = new Chart(canvasElement, config)
+  const chart = new Chart<"doughnut", number[], string>(canvasElement, config)
   // rotate chart for nice animated effect
   chart.options.rotation = (0)
   chart.update()
