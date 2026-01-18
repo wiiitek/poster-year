@@ -1,6 +1,6 @@
-import i18n, { TFunction } from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import HttpBackend from "i18next-http-backend";
+import i18n from 'i18next'
+import LanguageDetector from 'i18next-browser-languagedetector'
+import HttpBackend from "i18next-http-backend"
 
 
 export function configureI18N(): void {

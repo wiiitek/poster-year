@@ -1,6 +1,6 @@
 import { ArcElement, Element } from 'chart.js'
 
-import { Label } from '../chartLabels';
+import { Label } from '../chartLabels'
 import { calculateLabelPosition, LabelPosition } from './rotatedLabelsPosition'
 import { calculateTextRotationAngle } from './rotatedLabelsRotation'
 import { createLabelConfiguration, LabelConfiguration } from './rotatedLabelsTextAndStyle'

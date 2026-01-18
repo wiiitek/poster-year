@@ -64,7 +64,7 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
           callbacks: {
             // by default the title is taken from labels, but we have multilabels so we override it to be correct
             title: function (tooltipItems: TooltipItem<"doughnut">[]): string {
-              const tooltipItem = tooltipItems[0];
+              const tooltipItem = tooltipItems[0]
               return tooltipItem.dataset.label || ''
             },
             label: function (context: TooltipItem<"doughnut">): string {
