@@ -84,10 +84,5 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
     ],
   }
 
-  const chart = new Chart<"doughnut", number[], string>(canvasElement, config)
-  // rotate chart for nice animated effect
-  chart.options.rotation = (0)
-  chart.update()
-
-  return chart
+  return new Chart<"doughnut", number[], string>(canvasElement, config)
 }
