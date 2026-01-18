@@ -17,11 +17,11 @@ Chart.register(DoughnutController, ArcElement, Tooltip, Legend)
 
 export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughnut", number[], Label[]> {
   // Extract data directly from flat arrays
-  const seasonLabels = seasons.map(s => ({key: s.label, translation: s.label}))
+  const seasonLabels = seasons.map(s => ({ key: s.label, translation: s.label }))
   const seasonValues = seasons.map(s => s.value)
   const seasonColors = seasons.map(s => s.color)
 
-  const monthLabels = months.map(m => ({key: m.label, translation: m.label}))
+  const monthLabels = months.map(m => ({ key: m.label, translation: m.label }))
   const monthValues = months.map(m => m.value)
   const monthColors = months.map(m => m.color)
 
@@ -62,21 +62,15 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
         tooltip: {
           enabled: true,
           callbacks: {
-            // TODO: fix tooltips to show translated labels
+            // by default the title is taken from labels, but we have multilabels so we override it to be correct
+            title: function (tooltipItems: TooltipItem<"doughnut">[]): string {
+              const tooltipItem = tooltipItems[0];
+              return tooltipItem.dataset.label || ''
+            },
             label: function (context: TooltipItem<"doughnut">): string {
-              let label = ''
-              if (context.datasetIndex === 0) {
-                // Month tooltip
-                const monthLabels = context.chart.data.labels?.[0] || []
-                // label = monthLabels ? monthLabels[context.dataIndex]?.translation || '' : ''
-                // label = ?.[context.dataIndex]?.translation || ''
-                // label = monthLabels[context.dataIndex]
-                label = 'Month'
-              } else {
-                // Season tooltip
-                // label = seasonLabels[context.dataIndex]
-                label = 'Season'
-              }
+              const multiLabels = context.chart.data.labels
+              const seriesLabels = multiLabels ? multiLabels[context.datasetIndex] as Label[] : []
+              const label = seriesLabels[context.dataIndex]?.translation || ''
               const value = context.parsed || 0
               return `${label}: ${value} days`
             },

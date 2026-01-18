@@ -22,3 +22,7 @@ Chart can be rotated by pressing a key:
 
 * rotate left by pressing: `[`
 * and rotate right with: `]`
+
+## Changing the language
+
+To change the language press `SHIFT+L`.
