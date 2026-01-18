@@ -1,5 +1,3 @@
-import { seasons, months } from '../chartData'
-
 const DATASET_INDICES = { MONTHS: 0, SEASONS: 1 } as const
 
 // Constants for styling and positioning
@@ -15,10 +13,13 @@ export interface LabelConfiguration {
 }
 
 export function createLabelConfiguration(
+  multiLabels: string[][],
   datasetIndex: number,
   elementIndex: number
 ): LabelConfiguration {
-  const text = getLabelText(datasetIndex, elementIndex)
+  const labels: string[] = multiLabels[datasetIndex]
+  const text = labels[elementIndex] || ''
+
   const isMonthsDataset = datasetIndex === DATASET_INDICES.MONTHS
   const styleConfig = isMonthsDataset ? LABEL_STYLE_CONFIG.MONTH : LABEL_STYLE_CONFIG.SEASON
 
@@ -27,14 +28,4 @@ export function createLabelConfiguration(
     font: styleConfig.FONT,
     color: styleConfig.COLOR,
   }
-}
-
-function getLabelText(datasetIndex: number, elementIndex: number): string {
-  if (datasetIndex === DATASET_INDICES.SEASONS) {
-    return seasons[elementIndex]?.label || ''
-  }
-  if (datasetIndex === DATASET_INDICES.MONTHS) {
-    return months[elementIndex]?.label || ''
-  }
-  return ''
 }

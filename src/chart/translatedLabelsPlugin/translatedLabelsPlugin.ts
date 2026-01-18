@@ -20,7 +20,7 @@ export const translatedLabelsPlugin: Plugin<'doughnut'> = {
       const seasonValues: string[] = chart.data.labels?.[1] || [];
       const translatedSeasons = seasonValues.map(value => i18n.t(value));
       chart.data.labels = [translatedMonths, translatedSeasons];
-      //chart.update();
+      chart.update();
     });
   }
 }

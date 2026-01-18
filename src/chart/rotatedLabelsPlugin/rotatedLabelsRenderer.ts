@@ -13,13 +13,14 @@ interface ArcElementWithPosition extends ArcElement {
 }
 
 export function renderDatasetLabels(
+  multiLabels: string[][],
   context: CanvasRenderingContext2D,
   datasetIndex: number,
   elements: Element[]
 ): void {
   elements.forEach((element, elementIndex) => {
     const arcElement = element as unknown as ArcElementWithPosition
-    const labelConfiguration = createLabelConfiguration(datasetIndex, elementIndex)
+    const labelConfiguration = createLabelConfiguration(multiLabels, datasetIndex, elementIndex)
 
     renderLabel(context, datasetIndex, arcElement, labelConfiguration)
   })
