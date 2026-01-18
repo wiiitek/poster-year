@@ -12,7 +12,7 @@ if (canvasElement) {
   const chart = initializeChart(canvasElement)
   console.info('Chart initialized')
 
-  var rotationDegrees = 0
+  let rotationDegrees = 0
 
   // Add event listener for keypress events
   document.addEventListener('keydown', (event: KeyboardEvent) => {
