@@ -7,6 +7,7 @@ import {
   ChartConfiguration,
   TooltipItem,
 } from 'chart.js'
+import i18n from 'i18next'
 import { seasons, months } from './chartData'
 import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin'
 import { translatedLabelsPlugin } from './translatedLabelsPlugin/translatedLabelsPlugin'
@@ -59,7 +60,8 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
       cutout: '35%',
       plugins: {
         legend: {
-          display: false, // Hide legend since we have labels on chart
+          // hides legend since we have labels on chart
+          display: false,
         },
         tooltip: {
           enabled: true,
@@ -72,9 +74,10 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
             label: function (context: TooltipItem<"doughnut">): string {
               const multiLabels = context.chart.data.labels
               const seriesLabels = multiLabels ? multiLabels[context.datasetIndex] as Label[] : []
-              const label = seriesLabels[context.dataIndex]?.translation || ''
+              const translatedSeriesLabel = seriesLabels[context.dataIndex]?.translation || ''
               const value = context.parsed || 0
-              return `${label}: ${value} days`
+              const translatedDays = i18n.t('months.datapoint.days') || ''
+              return `${translatedSeriesLabel}: ${value} ${translatedDays}`
             },
           },
         },
