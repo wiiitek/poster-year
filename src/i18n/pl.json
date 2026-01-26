@@ -8,6 +8,9 @@
     },
     "months": {
         "term": "Miesiące",
+        "datapoint": {
+            "days": "dni"
+        },
         "january": "Styczeń",
         "february": "Luty",
         "march": "Marzec",
