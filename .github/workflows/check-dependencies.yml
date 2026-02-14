@@ -19,8 +19,10 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
+      - name: Remove package-lock
+        run: rm -f package-lock.json
 
-      - name: Install dependencies
+      - name: Create new package-lock.json
         run: npm install
 
       - name: Do Quick Install
