@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
-      - name: Remove package-lock
+      - name: Remove package-lock.json
         run: rm -f package-lock.json
 
       - name: Create new package-lock.json

@@ -49,7 +49,7 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 1    
+          retention-days: 1
       - name: Upload Tests Results
         uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
@@ -71,4 +71,3 @@ jobs:
           name: Playwright Tests
           path: test-results/junit.xml
           reporter: jest-junit
-
