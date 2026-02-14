@@ -1,20 +1,12 @@
 name: Build and Test
 
 on:
-  push:
-    branches:
-      - 'main'
   pull_request:
     branches:
       - 'main'
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron: '10 10 * * 5'  # every Friday at 10:10
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build-and-test:
@@ -79,16 +71,4 @@ jobs:
           name: Playwright Tests
           path: test-results/junit.xml
           reporter: jest-junit
-
-          # GitHub Pages
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
-          retention-days: 1 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4 
 
