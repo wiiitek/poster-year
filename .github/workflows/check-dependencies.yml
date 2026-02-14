@@ -1,0 +1,30 @@
+name: Build and Test
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: '10 10 */2 * *'  # every second day at 10:10
+
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Do Quick Install
+        run: npm ci
+
+      - name: Check for vulnerable dependencies
+        run: npm audit --audit-level=high
