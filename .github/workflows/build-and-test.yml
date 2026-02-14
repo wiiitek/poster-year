@@ -11,6 +11,10 @@ on:
     # * is a special character in YAML so you have to quote this string
     - cron: '10 10 * * 5'  # every Friday at 10:10
 
+permissions:
+  contents: read
+  pages: write
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -98,11 +102,6 @@ jobs:
           path: dist
       - name: List Current Folder
         run: ls -R
-      - name: Deploy
-        # https://github.com/JamesIves/github-pages-deploy-action#configuration-
-        uses: JamesIves/github-pages-deploy-action@v4.8.0
-        with:
-          repository-name: wiiitek/poster-year
-          branch: gh-pages
-          folder: ./dist
-          token: ${{ secrets.GH_TOKEN }}
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
