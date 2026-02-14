@@ -20,7 +20,9 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Install dependencies
+      - name: Remove Lock File
+        run: rm -fr package-lock.json
+      - name: Create New Lock File
         run: npm install
 
       - name: Do Quick Install
