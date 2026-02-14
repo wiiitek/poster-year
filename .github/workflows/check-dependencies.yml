@@ -1,12 +1,9 @@
 name: Check Dependencies
 
 on:
-  pull_request:
-    branches:
-      - 'main'
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: '10 10 */2 * *'  # every second day at 10:10
+    - cron: '34 10 * * 5'
 
 jobs:
   check-dependencies:
@@ -19,10 +16,10 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
+      - name: Remove package-lock.json
+        run: rm -f package-lock.json
 
-      - name: Remove Lock File
-        run: rm -fr package-lock.json
-      - name: Create New Lock File
+      - name: Create new package-lock.json
         run: npm install
 
       - name: Do Quick Install
