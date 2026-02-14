@@ -50,10 +50,9 @@ jobs:
       - name: Run Playwright tests
         run: npm test
 
-      - name: Archive built project
-        uses: actions/upload-artifact@v6
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: poster-year-dist
           path: dist
           retention-days: 1
       - name: Upload Playwright report
@@ -86,6 +85,9 @@ jobs:
           reporter: jest-junit
 
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     # make it work with skipped jobs: https://github.com/github/docs/issues/4822#issuecomment-826617890
     #if: ${{ (github.ref == 'refs/heads/main') && !failure() && !cancelled() }}
     needs:
@@ -95,13 +97,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - name: Download Build Project
-        uses: actions/download-artifact@v7
-        with:
-          name: poster-year-dist
-          path: dist
-      - name: List Current Folder
-        run: ls -R
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
