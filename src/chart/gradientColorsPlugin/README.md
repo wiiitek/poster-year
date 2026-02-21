@@ -13,3 +13,4 @@ This plugin for Chart.js will automatically generate gradient colors for dataset
 1. Add the plugin to your Chart.js configuration.
 2. Specify colors for some data points in your dataset.
 3. The plugin will fill in the rest with interpolated gradient colors.
+4. For first step you can experiment with [complementary colors](https://giggster.com/guide/complementary-colors/)
