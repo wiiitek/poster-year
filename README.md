@@ -2,8 +2,6 @@
 
 [![Build and Test](https://github.com/wiiitek/poster-year/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/wiiitek/poster-year/actions/workflows/build-and-test.yml)
 
-Rebased on [poster/main](https://github.com/wiiitek/poster).
-
 ![Poster Screenshot](https://raw.githubusercontent.com/wiiitek/poster-year/refs/heads/main/tests/screenshot.spec.ts-snapshots/poster-page-chromium-linux.png)
 
 ## Development
