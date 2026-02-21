@@ -11,6 +11,7 @@ import i18n from 'i18next'
 import { seasons, months } from './chartData'
 import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin'
 import { translatedLabelsPlugin } from './translatedLabelsPlugin/translatedLabelsPlugin'
+import { gradientColorsPlugin } from './gradientColorsPlugin/gradientColorsPlugin'
 import { Label } from './Label'
 
 // Register Chart.js components
@@ -89,6 +90,7 @@ export function initializeChart(canvasElement: HTMLCanvasElement): Chart<"doughn
     plugins: [
       rotatedLabelsPlugin,
       translatedLabelsPlugin,
+      gradientColorsPlugin,
     ],
   }
 
