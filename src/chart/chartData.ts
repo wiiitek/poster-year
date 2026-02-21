@@ -8,16 +8,16 @@ export const seasons = [
 
 // Month data for outer ring
 export const months = [
-  { label: 'months.march', value: 31, color: null },
+  { label: 'months.march', value: 31, color: '' },
   { label: 'months.april', value: 30, color: '#90EE90' },
-  { label: 'months.may', value: 31 },
-  { label: 'months.june', value: 30 },
+  { label: 'months.may', value: 31, color: '' },
+  { label: 'months.june', value: 30, color: '' },
   { label: 'months.july', value: 31, color: '#FFD700' },
-  { label: 'months.august', value: 31 },
-  { label: 'months.september', value: 30 },
+  { label: 'months.august', value: 31, color: '' },
+  { label: 'months.september', value: 30, color: '' },
   { label: 'months.october', value: 31, color: '#FF8C00' },
-  { label: 'months.november', value: 30 },
-  { label: 'months.december', value: 31 },
+  { label: 'months.november', value: 30, color: '' },
+  { label: 'months.december', value: 31, color: '' },
   { label: 'months.january', value: 31, color: '#87CEEB' },
-  { label: 'months.february', value: 28 },
+  { label: 'months.february', value: 28, color: '' },
 ]
