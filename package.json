@@ -4,9 +4,9 @@
   "description": "A4 landscape page poster project with TypeScript and CSS",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack serve",
-    "build": "NODE_ENV=production webpack build",
-    "preview": "npm run build && http-server dist --gzip",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "npm run test:ci && npm run test:e2e",
     "test:unit": "vitest",
     "test:ci": "vitest run",
