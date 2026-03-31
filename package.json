@@ -21,9 +21,6 @@
     "a4",
     "poster"
   ],
-  "overrides": {
-    "@noble/hashes": "2.0.1"
-  },
   "devDependencies": {
     "@eslint/js": "9.39.2",
     "@playwright/test": "1.58.2",
@@ -33,9 +30,9 @@
     "http-server": "14.1.1",
     "jsdom": "29.0.1",
     "ts-node": "10.9.2",
-    "typescript": "^5.9.3",
+    "typescript": "5.9.3",
     "typescript-eslint": "8.58.0",
-    "vite": "^8.0.3",
+    "vite": "8.0.3",
     "vitest": "4.1.2"
   },
   "dependencies": {
