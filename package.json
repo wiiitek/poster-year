@@ -28,10 +28,10 @@
     "@vitest/ui": "4.1.5",
     "eslint": "10.2.1",
     "http-server": "14.1.1",
-    "jsdom": "29.1.0",
+    "jsdom": "29.1.1",
     "ts-node": "10.9.2",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.59.0",
+    "typescript-eslint": "8.59.1",
     "vite": "8.0.10",
     "vitest": "4.1.5"
   },
