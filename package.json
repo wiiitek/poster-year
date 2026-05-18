@@ -26,7 +26,7 @@
     "@playwright/test": "1.60.0",
     "@types/node": "24.12.4",
     "@vitest/ui": "4.1.6",
-    "eslint": "10.3.0",
+    "eslint": "10.4.0",
     "http-server": "14.1.1",
     "jsdom": "29.1.1",
     "ts-node": "10.9.2",
