@@ -36,7 +36,8 @@ describe('arrayInterpolation', () => {
 
             expect(actual).toStrictEqual([
                 { start: 0, end: 1, startValue: '0', endValue: '70' },
-                { start: 1, end: 2, startValue: '70', endValue: '80' }
+                { start: 1, end: 2, startValue: '70', endValue: '80' },
+                { start: 2, end: 0, startValue: '80', endValue: '0' }
             ])
         })
 
@@ -45,7 +46,8 @@ describe('arrayInterpolation', () => {
 
             expect(actual).toStrictEqual([
                 { start: 0, end: 2, startValue: '0', endValue: '70' },
-                { start: 2, end: 4, startValue: '70', endValue: '80' }
+                { start: 2, end: 4, startValue: '70', endValue: '80' },
+                { start: 4, end: 0, startValue: '80', endValue: '0' }
             ])
         })
 
@@ -53,7 +55,8 @@ describe('arrayInterpolation', () => {
             const actual = splitIntoParts([ null, '70', null, '80', null])
 
             expect(actual).toStrictEqual([
-                { start: 1, end: 3, startValue: '70', endValue: '80' }
+                { start: 1, end: 3, startValue: '70', endValue: '80' },
+                { start: 3, end: 1, startValue: '80', endValue: '70' }
             ])
         })
     })

@@ -22,6 +22,16 @@ export function splitIntoParts(input: (string | null)[]): Part[] {
         const endValue = input[end]!!
         parts.push({ start, end, startValue, endValue })
     }
+    // and adds additional part to close cycle
+    const first = parts[0]
+    const last = parts[parts.length - 1]
+    const connectingPart = {
+        start: last.end,
+        end: first.start,
+        startValue: last.endValue,
+        endValue: first.startValue
+    }
+    parts.push(connectingPart)
 
     return parts
 }
