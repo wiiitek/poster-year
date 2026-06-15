@@ -1,8 +1,8 @@
 
 
 export function interpolateArray(
-    input: string[],
+    input: (string | null)[],
     interpolation: (start: string, end: string, steps: number) => string[]
 ): string[] {
-    return []
+    return interpolation(input[0]!!, input[input.length - 1]!!, input.length)
 }

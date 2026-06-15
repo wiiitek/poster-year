@@ -30,11 +30,17 @@ describe('arrayInterpolation', () => {
     })
 
     describe('interpolateArray', () => {
-        it('should return an empty array', () => {
-            
-            const actual = interpolateArray(['0', '8'], dummyInterpolation)
+
+        it('should interpolate simple array', () => {
+            const actual = interpolateArray(['0', null, null, null, '8'], dummyInterpolation)
 
             expect(actual).toStrictEqual(['0', '2', '4', '6', '8'])
+        })
+
+        it('should interpolate array with two fixed items', () => {
+            const actual = interpolateArray(['0', null, '70', null, '80'], dummyInterpolation)
+
+            expect(actual).toStrictEqual(['0', '35', '70', '75', '80'])
         })
     })
 })
