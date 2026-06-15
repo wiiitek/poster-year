@@ -11,7 +11,7 @@ import i18n from 'i18next'
 import { seasons, months } from './chartData'
 import { rotatedLabelsPlugin } from './rotatedLabelsPlugin/rotatedLabelsPlugin'
 import { translatedLabelsPlugin } from './translatedLabelsPlugin/translatedLabelsPlugin'
-import { interpolatedColorsPlugin } from './gradientColorsPlugin/interpolatedColorsPlugin'
+import { interpolatedColorsPlugin } from './interpolatedColorsPlugin/interpolatedColorsPlugin'
 import { Label } from './Label'
 
 // Register Chart.js components

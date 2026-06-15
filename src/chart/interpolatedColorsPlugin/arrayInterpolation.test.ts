@@ -32,20 +32,20 @@ describe('arrayInterpolation', () => {
   describe('splitIntoParts', () => {
 
     it('should split empty array', () => {
-      const actual = splitIntoParts([null, null, null])
+      const actual = splitIntoParts(['', '', ''])
 
       expect(actual).toStrictEqual([])
     })
 
     it('should split single item', () => {
-      const actual = splitIntoParts([null, '80', null])
+      const actual = splitIntoParts(['', '80', ''])
 
       expect(actual).toStrictEqual([
         { start: 1, end: 1, startValue: '80', endValue: '80' },
       ])
     })
 
-    it('should return parts when no nulls', () => {
+    it('should return parts when all provided', () => {
       const actual = splitIntoParts(['0', '70', '80'])
 
       expect(actual).toStrictEqual([
@@ -56,7 +56,7 @@ describe('arrayInterpolation', () => {
     })
 
     it('should split simple array into parts', () => {
-      const actual = splitIntoParts(['0', null, '70', null, '80'])
+      const actual = splitIntoParts(['0', '', '70', '', '80'])
 
       expect(actual).toStrictEqual([
         { start: 0, end: 2, startValue: '0', endValue: '70' },
@@ -66,7 +66,7 @@ describe('arrayInterpolation', () => {
     })
 
     it('should split array into parts when values inside', () => {
-      const actual = splitIntoParts([null, '70', null, '80', null])
+      const actual = splitIntoParts(['', '70', '', '80', ''])
 
       expect(actual).toStrictEqual([
         { start: 1, end: 3, startValue: '70', endValue: '80' },
@@ -78,37 +78,37 @@ describe('arrayInterpolation', () => {
   describe('interpolateArray', () => {
 
     it('should interpolate without values', () => {
-      const actual = interpolateArray([null, null], dummyInterpolation)
+      const actual = interpolateArray(['', ''], dummyInterpolation)
 
       expect(actual).toEqual([undefined, undefined])
     })
 
     it('should interpolate single item', () => {
-      const actual = interpolateArray([null, null, '33'], dummyInterpolation)
+      const actual = interpolateArray(['', '', '33'], dummyInterpolation)
 
       expect(actual).toStrictEqual(['33', '33', '33'])
     })
 
     it('should interpolate simple array', () => {
-      const actual = interpolateArray(['0', null, '16'], dummyInterpolation)
+      const actual = interpolateArray(['0', '', '16'], dummyInterpolation)
 
       expect(actual).toStrictEqual(['0', '8', '16'])
     })
 
     it('should interpolate simple long array', () => {
-      const actual = interpolateArray(['0', null, null, null, '8'], dummyInterpolation)
+      const actual = interpolateArray(['0', '', '', '', '8'], dummyInterpolation)
 
       expect(actual).toStrictEqual(['0', '2', '4', '6', '8'])
     })
 
     it('should interpolate array with two fixed items', () => {
-      const actual = interpolateArray(['0', null, '70', null, '80'], dummyInterpolation)
+      const actual = interpolateArray(['0', '', '70', '', '80'], dummyInterpolation)
 
       expect(actual).toStrictEqual(['0', '35', '70', '75', '80'])
     })
 
     it('should interpolate array with missing items at the start', () => {
-      const actual = interpolateArray([null, '0', null, '80'], dummyInterpolation)
+      const actual = interpolateArray(['', '0', '', '80'], dummyInterpolation)
 
       expect(actual).toStrictEqual(['40', '0', '40', '80'])
     })

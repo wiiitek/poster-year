@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { calculateInterpolatedColors } from './gradientColors'
+import { calculateInterpolatedColors } from './interpolatedColors'
 
-describe('gradientColors', () => {
+describe('interpolatedColors', () => {
 
-  describe('calculateGradientColors', () => {
+  describe('calculateInterpolatedColors', () => {
 
     // https://onlinepngtools.com/step-between-two-colors
     it.each`

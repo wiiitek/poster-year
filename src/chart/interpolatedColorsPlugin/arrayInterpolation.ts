@@ -40,7 +40,7 @@ export function splitIntoParts(input: (string | null)[]): Part[] {
 
   const nonNullItemsAt: number[] = []
   for (let i = 0; i < input.length; i++) {
-    if (input[i] !== null) {
+    if (input[i]) {
       nonNullItemsAt.push(i)
     }
   }
