@@ -1,8 +1,15 @@
 
-export function splitIntoParts(input: (string | null)[]): (string | null)[][] {
-    const parts: (string | null)[][] = []
+export interface Part {
+    start: number
+    end: number
+    startValue: string
+    endValue: string
+}
 
-    const nonNullItemsAt = []
+export function splitIntoParts(input: (string | null)[]): Part[] {
+    const parts: Part[] = []
+
+    const nonNullItemsAt: number[] = []
     for (let i = 0; i < input.length; i++) {
         if (input[i] !== null) {
             nonNullItemsAt.push(i)
@@ -11,7 +18,9 @@ export function splitIntoParts(input: (string | null)[]): (string | null)[][] {
     for (let i = 0; i < nonNullItemsAt.length - 1; i++) {
         const start = nonNullItemsAt[i]
         const end = nonNullItemsAt[i + 1]
-        parts.push(input.slice(start, end + 1))
+        const startValue = input[start]!!
+        const endValue = input[end]!!
+        parts.push({ start, end, startValue, endValue })
     }
 
     return parts

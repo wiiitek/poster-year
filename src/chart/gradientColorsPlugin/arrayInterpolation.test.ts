@@ -31,10 +31,30 @@ describe('arrayInterpolation', () => {
 
     describe('splitIntoParts', () => {
 
-        it('should split array into parts', () => {
+        it('should return parts when no nulls', () => {
+            const actual = splitIntoParts(['0', '70', '80'])
+
+            expect(actual).toStrictEqual([
+                { start: 0, end: 1, startValue: '0', endValue: '70' },
+                { start: 1, end: 2, startValue: '70', endValue: '80' }
+            ])
+        })
+
+        it('should split simple array into parts', () => {
             const actual = splitIntoParts(['0', null, '70', null, '80'])
 
-            expect(actual).toStrictEqual([['0', null, '70'], ['70', null, '80']])
+            expect(actual).toStrictEqual([
+                { start: 0, end: 2, startValue: '0', endValue: '70' },
+                { start: 2, end: 4, startValue: '70', endValue: '80' }
+            ])
+        })
+
+        it('should split array into parts when values inside', () => {
+            const actual = splitIntoParts([ null, '70', null, '80', null])
+
+            expect(actual).toStrictEqual([
+                { start: 1, end: 3, startValue: '70', endValue: '80' }
+            ])
         })
     })
 
