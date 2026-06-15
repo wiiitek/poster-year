@@ -64,6 +64,12 @@ describe('arrayInterpolation', () => {
   describe('interpolateArray', () => {
 
     it('should interpolate simple array', () => {
+      const actual = interpolateArray(['0', null, '16'], dummyInterpolation)
+
+      expect(actual).toStrictEqual(['0', '8', '16'])
+    })
+
+    it('should interpolate simple long array', () => {
       const actual = interpolateArray(['0', null, null, null, '8'], dummyInterpolation)
 
       expect(actual).toStrictEqual(['0', '2', '4', '6', '8'])

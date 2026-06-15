@@ -41,6 +41,24 @@ export function interpolateArray(
   interpolation: (start: string, end: string, steps: number) => string[]
 ): string[] {
   const parts: Part[] = splitIntoParts(input)
+  const result: string[] = new Array(input.length)
 
-  return interpolation(input[0]!!, input[input.length - 1]!!, input.length)
+    for (const part of parts) {
+        let steps: number = -1
+        const increase = part.start < part.end
+        if(increase) {
+            steps = part.end - part.start + 1
+        } else {
+            steps = input.length - part.start + part.end - 1
+        }
+        
+        const interpolatedPart = interpolation(part.startValue, part.endValue, steps)
+
+        for (let i = part.start; i <= part.end; i++) {
+            const index = i % input.length
+            result[index] = interpolatedPart[i]
+        }
+    }
+
+  return result
 }
