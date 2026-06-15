@@ -1,5 +1,4 @@
-
-export interface Part {
+interface Part {
   start: number
   end: number
   startValue: string
@@ -39,7 +38,6 @@ function splitIntoMoreThanOneParts(input: (string | null)[], nonNullItemsAt: num
 
 export function splitIntoParts(input: (string | null)[]): Part[] {
 
-
   const nonNullItemsAt: number[] = []
   for (let i = 0; i < input.length; i++) {
     if (input[i] !== null) {
@@ -58,24 +56,27 @@ export function splitIntoParts(input: (string | null)[]): Part[] {
   }
 }
 
+function howManySteps(start: number, end: number, inputLength: number): number {
+  let steps: number
+  const increase = start < end
+  if (increase) {
+    steps = end - start + 1
+  } else {
+    steps = inputLength - start + end + 1
+  }
+  return steps
+}
+
 export function interpolateArray(
   input: (string | null)[],
   interpolation: (start: string, end: string, steps: number) => string[]
 ): string[] {
-  let steps: number = -1
   const parts: Part[] = splitIntoParts(input)
   const result: string[] = new Array(input.length)
 
   for (const part of parts) {
-    const increase = part.start < part.end
-    if (increase) {
-      steps = part.end - part.start + 1
-    } else {
-      steps = input.length - part.start + part.end + 1
-    }
-
+    const steps = howManySteps(part.start, part.end, input.length)
     const interpolatedPart = interpolation(part.startValue, part.endValue, steps)
-
     for (let i = 0; i < interpolatedPart.length; i++) {
       const index = (part.start + i) % input.length
       result[index] = interpolatedPart[i]
