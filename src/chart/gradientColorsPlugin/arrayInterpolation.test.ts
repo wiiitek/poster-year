@@ -80,5 +80,11 @@ describe('arrayInterpolation', () => {
 
       expect(actual).toStrictEqual(['0', '35', '70', '75', '80'])
     })
+
+        it('should interpolate array with missing items at the start', () => {
+      const actual = interpolateArray([null, '0', null, '80'], dummyInterpolation)
+
+      expect(actual).toStrictEqual(['40', '0', '40', '80'])
+    })
   })
 })
