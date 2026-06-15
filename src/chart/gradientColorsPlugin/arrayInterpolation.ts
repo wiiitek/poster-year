@@ -1,4 +1,11 @@
 
+export function splitIntoParts(input: (string | null)[]): (string | number)[][] {
+    const parts: (string | number)[][] = []
+
+    
+
+    return parts
+}
 
 export function interpolateArray(
     input: (string | null)[],

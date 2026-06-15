@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { interpolateArray } from './arrayInterpolation'
+import { interpolateArray, splitIntoParts } from './arrayInterpolation'
 
 function dummyInterpolation(start: string, end: string, steps: number): string[] {
     const startNum = parseInt(start)
@@ -26,6 +26,15 @@ describe('arrayInterpolation', () => {
 
         it('should return an array of 5 elements', () => {
             expect(actual).toStrictEqual(['0', '2', '4', '6', '8'])
+        })
+    })
+
+    describe('splitIntoParts', () => {
+
+        it('should split array into parts', () => {
+            const actual = splitIntoParts(['0', null, '70', null, '80'])
+
+            expect(actual).toStrictEqual([['0', null, '70'], ['70', null, '80']])
         })
     })
 
