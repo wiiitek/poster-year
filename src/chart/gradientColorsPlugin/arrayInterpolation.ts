@@ -19,8 +19,8 @@ function splitIntoMoreThanOneParts(input: (string | null)[], nonNullItemsAt: num
   for (let i = 0; i < nonNullItemsAt.length - 1; i++) {
     const start = nonNullItemsAt[i]
     const end = nonNullItemsAt[i + 1]
-    const startValue = input[start]!!
-    const endValue = input[end]!!
+    const startValue = input[start]!
+    const endValue = input[end]!
     parts.push({ start, end, startValue, endValue })
   }
   // and adds additional part to close cycle
@@ -49,8 +49,7 @@ export function splitIntoParts(input: (string | null)[]): Part[] {
     case 0:
       return []
     case 1:
-      const index = nonNullItemsAt[0]
-      return oneItemOnly(index, input[index]!!)
+      return oneItemOnly(nonNullItemsAt[0], input[nonNullItemsAt[0]]!)
     default:
       return splitIntoMoreThanOneParts(input, nonNullItemsAt)
   }
