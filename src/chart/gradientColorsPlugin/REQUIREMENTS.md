@@ -6,8 +6,7 @@ The plugin calculates gradient colors for Chart.js datapoints based on partial c
 ## Key Requirements
 
 1. **Supported Color Format**: Only hex colors with transparency (e.g., #23A3F088) are accepted for now.
-2. **Gradient Type**: Linear interpolation between provided colors, with wrap-around (last to first). Suitable for circular charts (e.g., doughnut).
-3. **Interpolation Space**: RGBA color space. Interpolation logic must be isolated for easy replacement.
+2. **Gradient Type**: Linear interpolation between provided colors, with wrap-around (last to first).
 4. **Single Color Provided**: If only one color is specified, all datapoints use that color.
 5. **Multiple Colors & Nested Data**:
    1. Interpolate between each pair of consecutive provided colors.

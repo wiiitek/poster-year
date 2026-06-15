@@ -1,6 +1,8 @@
 # gradientColorsPlugin
 
-This plugin for Chart.js will automatically generate gradient colors for dataset points where explicit colors are not provided. The plugin will interpolate colors between the provided ones, creating smooth transitions across the dataset. For example, if you specify black for 'summer' and white for 'winter', the plugin will calculate intermediate gray shades for 'spring' and 'autumn'.
+The plugin will interpolate colors between the provided ones, creating smooth transitions.
+For example, if you specify black for 'summer' and white for 'winter',
+the plugin will calculate intermediate gray shades for 'spring' and 'autumn'.
 
 ## Features
 
