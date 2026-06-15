@@ -8,7 +8,7 @@ function splitColor(color: string): { r: number, g: number, b: number, a: number
   }
 }
 
-export function calculateGradientColors(startColor: string, endColor: string, steps: number): string[] {
+function calculateForSteps(startColor: string, endColor: string, steps: number): string[] {
   const start = splitColor(startColor)
   const end = splitColor(endColor)
 
@@ -29,4 +29,16 @@ export function calculateGradientColors(startColor: string, endColor: string, st
   }
 
   return result
+}
+
+export function calculateInterpolatedColors(startColor: string, endColor: string, steps: number): string[] {
+  if (steps <= 0) {
+    throw new Error('Steps must be greater than 0')
+  } else if (steps === 0) {
+    return []
+  } else if (steps === 1) {
+    return [startColor]
+  } else {
+    return calculateForSteps(startColor, endColor, steps)
+  }
 }

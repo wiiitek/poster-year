@@ -2,8 +2,8 @@ import { Chart, Plugin } from 'chart.js'
 
 import { Label } from '../Label'
 
-export const gradientColorsPlugin: Plugin<'doughnut'> = {
-  id: 'gradientColors',
+export const interpolatedColorsPlugin: Plugin<'doughnut'> = {
+  id: 'interpolatedColors',
 
   beforeInit(chart: Chart<"doughnut", number[], Label[]>) {
     //Your one-time logic here
@@ -17,6 +17,6 @@ export const gradientColorsPlugin: Plugin<'doughnut'> = {
       gradient.addColorStop(1, 'rgba(23, 255, 38, 0.8)')
       dataset.backgroundColor = gradient
     })
-    console.log('Gradient Colors Plugin initialized')
+    console.log('Interpolated Colors Plugin initialized')
   },
 }

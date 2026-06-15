@@ -1,20 +1,20 @@
-# Requirements for gradientColorsPlugin
+# Requirements for interpolatedColorsPlugin
 
 ## Purpose
-The plugin calculates gradient colors for Chart.js datapoints based on partial color specifications. It does not interact with chart rendering, only computes and assigns a `gradientColor` property to datapoints.
+The plugin calculates between colors for Chart.js datapoints based on partial color specifications.
+It does not interact with chart rendering, only computes and assigns a color property to datapoints.
 
 ## Key Requirements
 
 1. **Supported Color Format**: Only hex colors with transparency (e.g., #23A3F088) are accepted for now.
-2. **Gradient Type**: Linear interpolation between provided colors, with wrap-around (last to first).
+2. **Interpolation Type**: Linear interpolation between provided colors, with wrap-around (last to first).
 4. **Single Color Provided**: If only one color is specified, all datapoints use that color.
 5. **Multiple Colors & Nested Data**:
    1. Interpolate between each pair of consecutive provided colors.
    2. Nested series (e.g. seasons and months) are independent
 6. **Input Source**: The plugin reads input colors directly from datapoints.
-7. **Color Mapping**: Gradient colors are always mapped directly to datapoints.
 8. **Behaviour**:
-   - while only some datapoints can have colors, the plugin calculates `gradientColor` for the rest.
+   - while only some datapoints can have colors, the plugin calculates interpolated colors for the rest.
    - if no colors are specified, the plugin makes all datapoint transparent.
 
 ## Algorithm
@@ -32,16 +32,16 @@ The algorithm calculates missing colors in a flat array, interpolating between p
 ### Pseudo code
 
 ```
-function calculateGradientColors(datapoints):
+function calculateInterpolatedColors(datapoints):
    n = length of datapoints
    colorIndices = indices where datapoints[i].color is defined
    if colorIndices.length == 0:
       for i in 0..n-1:
-         datapoints[i].gradientColor = '#FFFFFF00' // transparent white
+         datapoints[i].interpolatedColor = '#FFFFFF00' // transparent white
       return
    if colorIndices.length == 1:
       for i in 0..n-1:
-         datapoints[i].gradientColor = datapoints[colorIndices[0]].color
+         datapoints[i].interpolatedColor = datapoints[colorIndices[0]].color
       return
    for each segment (start, end) in colorIndices (wrap last to first):
       startColor = parseColor(datapoints[start].color)
@@ -51,10 +51,10 @@ function calculateGradientColors(datapoints):
       for j in 1..segmentLength-1:
          t = j / segmentLength
          interpolatedColor = interpolateColor(startColor, endColor, t)
-         datapoints[(start + j) % n].gradientColor = interpolatedColor
-   // and copy provided colors as gradient colors
+         datapoints[(start + j) % n].interpolatedColor = interpolatedColor
+   // and copy provided colors as interpolated colors
    for i in colorIndices:
-      datapoints[i].gradientColor = datapoints[i].color
+      datapoints[i].interpolatedColor = datapoints[i].color
 ```
 
 *parseColor* converts hex to RGBA, defaulting alpha to 255 if not specified.

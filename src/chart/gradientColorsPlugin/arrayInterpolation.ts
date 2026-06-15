@@ -69,9 +69,9 @@ function howManySteps(start: number, end: number, inputLength: number): number {
 export function interpolateArray(
   input: (string | null)[],
   interpolation: (start: string, end: string, steps: number) => string[]
-): string[] {
+): (string | undefined)[] {
   const parts: Part[] = splitIntoParts(input)
-  const result: string[] = new Array(input.length)
+  const result: (string | undefined)[] = new Array(input.length)
 
   for (const part of parts) {
     const steps = howManySteps(part.start, part.end, input.length)
