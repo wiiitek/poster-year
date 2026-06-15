@@ -71,7 +71,7 @@ export function interpolateArray(
   interpolation: (start: string, end: string, steps: number) => string[]
 ): (string | undefined)[] {
   const parts: Part[] = splitIntoParts(input)
-  const result: (string | undefined)[] = new Array(input.length)
+  const result: (string | undefined)[] = new Array(input.length).fill(undefined)
 
   for (const part of parts) {
     const steps = howManySteps(part.start, part.end, input.length)
