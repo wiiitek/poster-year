@@ -6,15 +6,17 @@ export interface Part {
   endValue: string
 }
 
-export function splitIntoParts(input: (string | null)[]): Part[] {
-  const parts: Part[] = []
+function oneItemOnly(nonNullItemsAt: number, value: string): Part[] {
+  return [{
+    start: nonNullItemsAt,
+    end: nonNullItemsAt,
+    startValue: value,
+    endValue: value,
+  }]
+}
 
-  const nonNullItemsAt: number[] = []
-  for (let i = 0; i < input.length; i++) {
-    if (input[i] !== null) {
-      nonNullItemsAt.push(i)
-    }
-  }
+function splitIntoMoreThanOneParts(input: (string | null)[], nonNullItemsAt: number[]): Part[] {
+  const parts: Part[] = []
   for (let i = 0; i < nonNullItemsAt.length - 1; i++) {
     const start = nonNullItemsAt[i]
     const end = nonNullItemsAt[i + 1]
@@ -32,8 +34,28 @@ export function splitIntoParts(input: (string | null)[]): Part[] {
     endValue: first.startValue
   }
   parts.push(connectingPart)
-
   return parts
+}
+
+export function splitIntoParts(input: (string | null)[]): Part[] {
+
+
+  const nonNullItemsAt: number[] = []
+  for (let i = 0; i < input.length; i++) {
+    if (input[i] !== null) {
+      nonNullItemsAt.push(i)
+    }
+  }
+
+  switch (nonNullItemsAt.length) {
+    case 0:
+      return []
+    case 1:
+      const index = nonNullItemsAt[0]
+      return oneItemOnly(index, input[index]!!)
+    default:
+      return splitIntoMoreThanOneParts(input, nonNullItemsAt)
+  }
 }
 
 export function interpolateArray(
