@@ -10,7 +10,7 @@ describe('rotatedLabelsRotation.ts', () => {
         description              | middleAngle         | expected
         ${'0 degrees (north)'}   | ${0}                | ${0}
         ${'180 degrees (south)'} | ${Math.PI}          | ${Math.PI}
-        ${'270 degrees (east)'}  | ${3 * Math.PI / 2}  | ${-Math.PI / 2}§
+        ${'270 degrees (east)'}  | ${3 * Math.PI / 2}  | ${-Math.PI / 2}
         ${'360 degrees (north)'} | ${2 * Math.PI}      | ${0}
       `('$description', ({ middleAngle, expected }) => {
         const perpendicular = false
