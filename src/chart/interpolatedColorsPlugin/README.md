@@ -4,15 +4,20 @@ The plugin will interpolate colors between the provided ones, creating smooth tr
 For example, if you specify black for 'summer' and white for 'winter'
 the plugin will calculate intermediate gray shades for 'spring' and 'autumn'.
 
-## Features
+## Algorithm
 
-1. Accepts partial color definitions for dataset points.
-2. Calculates missing colors as an interpolation between provided colors.
-3. Applies the generated color array to the dataset before the chart is created.
+The algorithm calculates missing colors in a flat array,
+interpolating between provided colors and wrapping from the last to the first.
+It works as follows:
 
-## Usage
+1. Identify indices of datapoints with provided colors.
+2. For each segment between two provided colors (including wrap-around from last to first):
+   - Interpolate missing colors evenly between those provided.
+   - Apply generated color array to the dataset before the chart is created.
 
-1. Add the plugin to your Chart.js configuration.
-2. Specify colors for some data points in your dataset.
-3. The plugin will fill in the rest with interpolated colors.
-4. For first step you can experiment with [complementary colors](https://giggster.com/guide/complementary-colors/)
+## Additional Notes
+
+1. **Supported Color Format**: Only hex colors (e.g., #23A3F0) are accepted for now.
+2. **Interpolation Type**: Linear interpolation between provided colors, with wrap-around (last to first).
+3. **Single Color Provided**: If only one color is specified, all datapoints use that color.
+4. **Input Source**: The plugin reads input colors directly from datapoints.
