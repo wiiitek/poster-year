@@ -7,20 +7,20 @@ interface Part {
   endValue: string
 }
 
-function oneItemOnly(nonNullItemsAt: number, value: string): Part[] {
+function oneItemOnly(nonEmptyItemIndex: number, value: string): Part[] {
   return [{
-    start: nonNullItemsAt,
-    end: nonNullItemsAt,
+    start: nonEmptyItemIndex,
+    end: nonEmptyItemIndex,
     startValue: value,
     endValue: value,
   }]
 }
 
-function splitIntoMoreThanOneParts(input: string[], nonNullItemsAt: number[]): Part[] {
+function splitIntoMoreThanOneParts(input: string[], nonEmptyItemsIndexes: number[]): Part[] {
   const parts: Part[] = []
-  for (let i = 0; i < nonNullItemsAt.length - 1; i++) {
-    const start = nonNullItemsAt[i]
-    const end = nonNullItemsAt[i + 1]
+  for (let i = 0; i < nonEmptyItemsIndexes.length - 1; i++) {
+    const start = nonEmptyItemsIndexes[i]
+    const end = nonEmptyItemsIndexes[i + 1]
     const startValue = input[start]!
     const endValue = input[end]!
     parts.push({ start, end, startValue, endValue })
@@ -39,21 +39,21 @@ function splitIntoMoreThanOneParts(input: string[], nonNullItemsAt: number[]): P
 }
 
 export function splitIntoParts(input: string[]): Part[] {
-
-  const nonNullItemsAt: number[] = []
+  // discovers indexex of non-empty values
+  const nonEmptyItemsIndexes: number[] = []
   for (let i = 0; i < input.length; i++) {
     if (input[i]) {
-      nonNullItemsAt.push(i)
+      nonEmptyItemsIndexes.push(i)
     }
   }
 
-  switch (nonNullItemsAt.length) {
+  switch (nonEmptyItemsIndexes.length) {
     case 0:
       return []
     case 1:
-      return oneItemOnly(nonNullItemsAt[0], input[nonNullItemsAt[0]]!)
+      return oneItemOnly(nonEmptyItemsIndexes[0], input[nonEmptyItemsIndexes[0]]!)
     default:
-      return splitIntoMoreThanOneParts(input, nonNullItemsAt)
+      return splitIntoMoreThanOneParts(input, nonEmptyItemsIndexes)
   }
 }
 

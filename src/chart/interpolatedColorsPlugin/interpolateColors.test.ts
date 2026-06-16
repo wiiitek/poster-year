@@ -7,7 +7,7 @@ describe('interpolateColors.ts', () => {
 
     // https://onlinepngtools.com/step-between-two-colors
     it.each`
-      startColor    |      endColor | steps | expected
+      startColor     |       endColor | steps | expected
       ${'#123456'} | ${'#888888'} |  ${1} | ${['#123456']}
       ${'#000000'} | ${'#FFFFFF'} |  ${2} | ${['#000000', '#FFFFFF']}
       ${'#000000'} | ${'#222222'} |  ${3} | ${['#000000', '#111111', '#222222']}
