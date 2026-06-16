@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { calculateTextRotationAngle } from './rotatedLabelsRotation'
 
-describe('rotatedLabelsRotation', () => {
+describe('rotatedLabelsRotation.ts', () => {
 
   describe('calculateTextRotationAngle', () => {
 

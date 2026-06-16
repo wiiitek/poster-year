@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { calculateLabelPosition, LabelPosition } from './rotatedLabelsPosition'
 
-describe('rotatedLabelsPosition', () => {
+describe('rotatedLabelsPosition.ts', () => {
 
   // calculates position relative to original chart center
   // from direction (angle) and distance (radius)
