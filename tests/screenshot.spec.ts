@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 const chartIsRendered = () => {
   const canvas = document.querySelector('#myChart') as HTMLCanvasElement
   // Wait for canvas to have actual dimensions (indicating it's been drawn)
-  return canvas && canvas.width > 0 && canvas.height > 0
+  return canvas && canvas.width > 800 && canvas.height > 600
 }
 
 test.describe('Poster Screenshot Tests', () => {
