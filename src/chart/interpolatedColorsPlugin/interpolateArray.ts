@@ -69,6 +69,7 @@ function howManySteps(start: number, end: number, inputLength: number): number {
 }
 
 /**
+ * Interpolates an array of strings with empty values to be interpolated.
  * 
  * @param input array of strings with some empty values to be interpolated
  * @param interpolationFunction function used to interpolate between two values
