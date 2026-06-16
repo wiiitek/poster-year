@@ -8,10 +8,10 @@ describe('interpolateColors.ts', () => {
     // https://onlinepngtools.com/step-between-two-colors
     it.each`
       startColor    |      endColor | steps | expected
-      ${'12345678'} | ${'88888888'} |  ${1} | ${['12345678']}
-      ${'00000000'} | ${'FFFFFFFF'} |  ${2} | ${['00000000', 'FFFFFFFF']}
-      ${'00000000'} | ${'22222222'} |  ${3} | ${['00000000', '11111111', '22222222']}
-      ${'23B1AC00'} | ${'8B008B64'} |  ${4} | ${['23B1AC00', '4676A121', '683B9643', '8B008B64']}
+      ${'#123456'} | ${'#888888'} |  ${1} | ${['#123456']}
+      ${'#000000'} | ${'#FFFFFF'} |  ${2} | ${['#000000', '#FFFFFF']}
+      ${'#000000'} | ${'#222222'} |  ${3} | ${['#000000', '#111111', '#222222']}
+      ${'#23B1AC'} | ${'#8B008B'} |  ${4} | ${['#23B1AC', '#4676A1', '#683B96', '#8B008B']}
     `('should ', ({ startColor, endColor, steps, expected }) => {
 
       const actual: string[] = interpolateColors(startColor, endColor, steps)
