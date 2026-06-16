@@ -1,3 +1,5 @@
+import { InterpolationFunction } from "./InterpolationFunction"
+
 interface Part {
   start: number
   end: number
@@ -14,7 +16,7 @@ function oneItemOnly(nonNullItemsAt: number, value: string): Part[] {
   }]
 }
 
-function splitIntoMoreThanOneParts(input: (string | null)[], nonNullItemsAt: number[]): Part[] {
+function splitIntoMoreThanOneParts(input: string[], nonNullItemsAt: number[]): Part[] {
   const parts: Part[] = []
   for (let i = 0; i < nonNullItemsAt.length - 1; i++) {
     const start = nonNullItemsAt[i]
@@ -36,7 +38,7 @@ function splitIntoMoreThanOneParts(input: (string | null)[], nonNullItemsAt: num
   return parts
 }
 
-export function splitIntoParts(input: (string | null)[]): Part[] {
+export function splitIntoParts(input: string[]): Part[] {
 
   const nonNullItemsAt: number[] = []
   for (let i = 0; i < input.length; i++) {
@@ -66,16 +68,22 @@ function howManySteps(start: number, end: number, inputLength: number): number {
   return steps
 }
 
+/**
+ * 
+ * @param input array of strings with some empty values to be interpolated
+ * @param interpolationFunction function used to interpolate between two values
+ * @returns array of strings with interpolated values, empty strings are replaced with interpolated values, non-empty values are preserved
+ */
 export function interpolateArray(
-  input: (string | null)[],
-  interpolation: (start: string, end: string, steps: number) => string[]
+  input: string[],
+  interpolationFunction: InterpolationFunction
 ): (string | undefined)[] {
   const parts: Part[] = splitIntoParts(input)
   const result: (string | undefined)[] = new Array(input.length).fill(undefined)
 
   for (const part of parts) {
     const steps = howManySteps(part.start, part.end, input.length)
-    const interpolatedPart = interpolation(part.startValue, part.endValue, steps)
+    const interpolatedPart = interpolationFunction(part.startValue, part.endValue, steps)
     for (let i = 0; i < interpolatedPart.length; i++) {
       const index = (part.start + i) % input.length
       result[index] = interpolatedPart[i]

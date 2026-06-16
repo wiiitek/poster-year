@@ -1,3 +1,4 @@
+import { InterpolationFunction } from "./InterpolationFunction"
 
 function splitColor(color: string): { r: number, g: number, b: number, a: number } {
   return {
@@ -31,7 +32,7 @@ function calculateForSteps(startColor: string, endColor: string, steps: number):
   return result
 }
 
-export function calculateInterpolatedColors(startColor: string, endColor: string, steps: number): string[] {
+export const interpolateColors: InterpolationFunction = (startColor: string, endColor: string, steps: number): string[] => {
   if (steps <= 0) {
     throw new Error('Steps must be greater than 0')
   } else if (steps === 0) {

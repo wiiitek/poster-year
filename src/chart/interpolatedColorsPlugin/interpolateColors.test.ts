@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { calculateInterpolatedColors } from './interpolatedColors'
+import { interpolateColors } from './interpolateColors'
 
-describe('interpolatedColors', () => {
+describe('interpolateColors.ts', () => {
 
-  describe('calculateInterpolatedColors', () => {
+  describe('interpolateColors', () => {
 
     // https://onlinepngtools.com/step-between-two-colors
     it.each`
@@ -12,9 +12,9 @@ describe('interpolatedColors', () => {
       ${'00000000'} | ${'FFFFFFFF'} |  ${2} | ${['00000000', 'FFFFFFFF']}
       ${'00000000'} | ${'22222222'} |  ${3} | ${['00000000', '11111111', '22222222']}
       ${'23B1AC00'} | ${'8B008B64'} |  ${4} | ${['23B1AC00', '4676A121', '683B9643', '8B008B64']}
-     `('should ', ({ startColor, endColor, steps, expected }) => {
+    `('should ', ({ startColor, endColor, steps, expected }) => {
 
-      const actual = calculateInterpolatedColors(startColor, endColor, steps)
+      const actual: string[] = interpolateColors(startColor, endColor, steps)
 
       expect(actual).toStrictEqual(expected)
     })

@@ -9,7 +9,7 @@ export const interpolatedColorsPlugin: Plugin<'doughnut'> = {
     //Your one-time logic here
     chart.data.datasets.forEach((dataset) => {
 
-      //const colors = dataset.backgroundColor as string[]
+      const colors = dataset.backgroundColor as string[]
 
       const ctx = chart.ctx
       const gradient: CanvasGradient = ctx.createLinearGradient(0, 0, 0, chart.height)

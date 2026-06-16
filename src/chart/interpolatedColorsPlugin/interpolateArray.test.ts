@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { interpolateArray, splitIntoParts } from './arrayInterpolation'
+import { InterpolationFunction } from './InterpolationFunction'
+import { interpolateArray, splitIntoParts } from './interpolateArray'
 
-function dummyInterpolation(start: string, end: string, steps: number): string[] {
+const dummyInterpolation: InterpolationFunction = (start: string, end: string, steps: number): string[] => {
   const startNum = parseInt(start)
   const endNum = parseInt(end)
   const stepSize = (endNum - startNum) / (steps - 1)
@@ -14,14 +15,15 @@ function dummyInterpolation(start: string, end: string, steps: number): string[]
   return result
 }
 
-describe('arrayInterpolation', () => {
+describe('interpolateArray.ts', () => {
 
   describe('dummyInterpolation', () => {
 
-    const actual = dummyInterpolation('0', '8', 5)
+    const dummySteps = 5
+    const actual = dummyInterpolation('0', '8', dummySteps)
 
     it('should return an array of 5 elements', () => {
-      expect(actual).toHaveLength(5)
+      expect(actual).toHaveLength(dummySteps)
     })
 
     it('should return an array of 5 elements', () => {
