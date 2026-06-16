@@ -39,7 +39,7 @@ function splitIntoMoreThanOneParts(input: string[], nonEmptyItemsIndexes: number
 }
 
 export function splitIntoParts(input: string[]): Part[] {
-  // discovers indexex of non-empty values
+  // discovers indexes of non-empty values
   const nonEmptyItemsIndexes: number[] = []
   for (let i = 0; i < input.length; i++) {
     if (input[i]) {
@@ -73,7 +73,7 @@ function howManySteps(start: number, end: number, inputLength: number): number {
  * 
  * @param input array of strings with some empty values to be interpolated
  * @param interpolationFunction function used to interpolate between two values
- * @returns array of strings with interpolated values, empty strings are replaced with interpolated values, non-empty values are preserved
+ * @returns array of strings with interpolated values, for all inputs empty returns array of undefines.
  */
 export function interpolateArray(
   input: string[],

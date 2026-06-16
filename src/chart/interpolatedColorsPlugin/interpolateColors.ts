@@ -1,7 +1,13 @@
 import { InterpolationFunction } from "./InterpolationFunction"
 
+const COLOR_PATTERN = /^[0-9a-fA-F]{6}$/
+
 function splitColor(color: string): { r: number, g: number, b: number } {
-  const normalized = color.replace('#', '')
+  const normalized = color.startsWith('#') ? color.slice(1) : color
+  const isColor = COLOR_PATTERN.test(normalized)
+  if (!isColor) {
+    throw new Error(`Invalid hex color: "${color}"`)
+  }
   return {
     r: parseInt(normalized.slice(0, 2), 16),
     g: parseInt(normalized.slice(2, 4), 16),
@@ -31,8 +37,8 @@ function calculateForSteps(startColor: string, endColor: string, steps: number):
 }
 
 export const interpolateColors: InterpolationFunction = (startColor: string, endColor: string, steps: number): string[] => {
-  if (steps <= 0) {
-    throw new Error('Steps must be greater than 0')
+  if (steps < 0) {
+    throw new Error('Steps must not be negative.')
   } else if (steps === 0) {
     return []
   } else if (steps === 1) {
