@@ -6,7 +6,6 @@ body {
 
 * {
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
 }
 
 .page {
@@ -46,11 +45,12 @@ body {
 
   .page {
     width: initial;
-    min-height: initial;
-    margin: 0;
+    height: 210mm;
+    margin: initial;
     border-radius: initial;
     background: initial;
     box-shadow: initial;
-    page-break-after: always;
+    /* .page elements will be printed on separate pages */
+    break-after: always;
   }
 }

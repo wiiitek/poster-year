@@ -1,13 +1,15 @@
 {
+  // Vite is building the project, so we don't want TypeScript to emit any output files.
+  "noEmit": true,
   "compilerOptions": {
     "target": "es2020",
-    "module": "es2020",
+    "module": "esnext",
     "lib": ["es2020", "DOM"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true
   },
   "include": ["src/**/*"],
