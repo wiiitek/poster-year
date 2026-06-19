@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "es2020",
+    "module": "esnext",
     "lib": ["es2020", "DOM"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true
   },
   "include": ["src/**/*"],
