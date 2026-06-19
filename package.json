@@ -2,7 +2,6 @@
   "name": "poster",
   "version": "1.0.0",
   "description": "A4 landscape page poster project with TypeScript and CSS",
-  "main": "index.js",
   "scripts": {
     "start": "vite",
     "build": "vite build",

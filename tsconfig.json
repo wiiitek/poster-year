@@ -1,4 +1,6 @@
 {
+  // Vite is building the project, so we don't want TypeScript to emit any output files.
+  "noEmit": true,
   "compilerOptions": {
     "target": "es2020",
     "module": "esnext",
