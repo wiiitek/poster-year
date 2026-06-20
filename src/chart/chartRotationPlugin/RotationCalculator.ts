@@ -45,6 +45,8 @@ export class RotationCalculatorImpl implements RotationCalculator {
   }
 
 
+  // TODO: https://github.com/software-mansion/react-native-gesture-handler
+  
   /**
    * Calculate the angle of rotation between start position and current position,
    * relative to the canvas center.
