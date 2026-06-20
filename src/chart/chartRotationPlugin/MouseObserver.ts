@@ -1,10 +1,10 @@
-import { MouseActions } from "./MouseActions"
+import { RotationCalculator } from "./RotationCalculator"
 
 export class MouseObserver {
 
   private isMousePressed: boolean = false
 
-  constructor(private mouseActions: MouseActions) { }
+  constructor(private mouseActions: RotationCalculator) { }
 
   private getMouseCoordinates(event: MouseEvent) {
     const x: number = event.clientX
