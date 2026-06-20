@@ -64,17 +64,34 @@ export class RotationCalculatorImpl implements RotationCalculator {
     // 1. Normalize coordinates (center becomes [0,0])
     const normalizedStartX = this.startX - this.centerX
     const normalizedStartY = this.startY - this.centerY
-    const normalizedCurrentX = x - this.centerX
-    const normalizedCurrentY = y - this.centerY
+    if (normalizedStartX === 0 && normalizedStartY === 0) {
+      // starting from center of the chart: cannot tell the rotation
+      return 0
+    } else {
+      const { x: nStartX, y: nStartY } = this.normalizeLength(normalizedStartX, normalizedStartY)
 
-    // 2. Calculate angles using atan2
-    const startAngle = Math.atan2(normalizedStartY, normalizedStartX)
-    const currentAngle = Math.atan2(normalizedCurrentY, normalizedCurrentX)
+      const normalizedCurrentX = x - this.centerX
+      const normalizedCurrentY = y - this.centerY
+      const { x: nCurrentX, y: nCurrentY } = this.normalizeLength(normalizedCurrentX, normalizedCurrentY)
 
-    // Calculate the difference in radians and convert to degrees
-    const angleDelta = startAngle - currentAngle
-    const angleDeltaDegrees = (angleDelta * 180) / Math.PI
+      // 2. Calculate angles using atan2
+      const startAngle = Math.atan2(nStartY, nStartX)
+      const currentAngle = Math.atan2(nCurrentY, nCurrentX)
 
-    return angleDeltaDegrees
+      // Calculate the difference in radians and convert to degrees
+      const angleDelta = startAngle - currentAngle
+      const angleDeltaDegrees = (angleDelta * 180) / Math.PI
+
+      return angleDeltaDegrees
+    }
+  }
+
+  normalizeLength(x: number, y: number): { x: number; y: number } {
+    const length = Math.sqrt(x * x + y * y)
+    if (length === 0) {
+      return { x: 0, y: 0 }
+    } else {
+      return { x: x / length, y: y / length }
+    }
   }
 }
