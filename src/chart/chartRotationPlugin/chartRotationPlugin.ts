@@ -11,7 +11,11 @@ export const chartRotationPlugin: Plugin<'doughnut'> = {
     const canvasElement: HTMLCanvasElement = chart.canvas
     const canvasRectangle: DOMRect = canvasElement.getBoundingClientRect()
     const chartRotation = new ChartRotation(chart)
-    const rotationCalculator = new RotationCalculator(canvasRectangle, chartRotation)
+
+    const centerX = canvasRectangle.left + canvasRectangle.width / 2
+    const centerY = canvasRectangle.top + canvasRectangle.height / 2
+
+    const rotationCalculator = new RotationCalculator(centerX, centerY, chartRotation)
     const mouseObserver = new MouseObserver(rotationCalculator)
 
     // Add event listeners

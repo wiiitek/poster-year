@@ -7,22 +7,23 @@ import { ChartRotation } from "./ChartRotation"
  */
 export class RotationCalculator {
 
-  private centerX: number = 0
-  private centerY: number = 0
+  // private centerX: number = 0
+  // private centerY: number = 0
 
   private startX: number = 0
   private startY: number = 0
 
   /**
-   * @param canvasRectangle - Chart canvas for finding the center point.
-   * @param chartRotation - Wraper for chart to perform rotations.
+   * @param centerX - X coordinate of the chart center.
+   * @param centerY - Y coordinate of the chart center.
+   * @param chartRotation - Wrapper for chart to perform rotations.
    */
-  constructor(canvasRectangle: DOMRect, private chartRotation: ChartRotation) {
+  constructor(private centerX: number, private centerY: number, private chartRotation: ChartRotation) {
     console.log(
-      `canvas left: ${canvasRectangle.left.toFixed(2)}, canvas top: ${canvasRectangle.top.toFixed(2)}`
+      `center X: ${centerX.toFixed(2)}, center Y: ${centerY.toFixed(2)}`
     )
-    this.centerX = canvasRectangle.left + canvasRectangle.width / 2
-    this.centerY = canvasRectangle.top + canvasRectangle.height / 2
+    // this.centerX = canvasRectangle.left + canvasRectangle.width / 2
+    // this.centerY = canvasRectangle.top + canvasRectangle.height / 2
   }
 
   onStart(x: number, y: number) {
