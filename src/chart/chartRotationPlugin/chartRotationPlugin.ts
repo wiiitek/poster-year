@@ -1,6 +1,7 @@
 import { Chart, Plugin } from 'chart.js'
 import { Label } from '../Label'
-import { MouseTracker } from './MouseTracker'
+import { MouseActions } from './MouseActions'
+import { MouseObserver } from './MouseObserver'
 
 export const chartRotationPlugin: Plugin<'doughnut'> = {
   id: 'chartRotation',
@@ -8,11 +9,12 @@ export const chartRotationPlugin: Plugin<'doughnut'> = {
   afterInit(chart: Chart<'doughnut', number[], Label[]>) {
     const canvasElement: HTMLCanvasElement = chart.canvas
     const canvasRectangle: DOMRect = canvasElement.getBoundingClientRect()
-    const mouseTracker = new MouseTracker(canvasRectangle)
+    const mouseActions = new MouseActions(canvasRectangle)
+    const mouseObserver = new MouseObserver(mouseActions)
 
     // Add event listeners
-    canvasElement.addEventListener('mousedown', mouseTracker.handleMouseDown)
-    document.addEventListener('mousemove', mouseTracker.handleMouseMove)
-    document.addEventListener('mouseup', mouseTracker.handleMouseUp)
+    document.addEventListener('mousedown', mouseObserver.handleMouseDown)
+    document.addEventListener('mousemove', mouseObserver.handleMouseMove)
+    document.addEventListener('mouseup', mouseObserver.handleMouseUp)
   },
 }
