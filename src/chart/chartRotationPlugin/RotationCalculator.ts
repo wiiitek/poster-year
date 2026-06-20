@@ -8,7 +8,7 @@ import { ChartRotation } from "./ChartRotation"
 export interface RotationCalculator {
   onStart(x: number, y: number): void
   onUpdate(x: number, y: number): void
-  calculateAngle(x: number, y: number): numbere
+  calculateAngle(x: number, y: number): number
 }
 export class RotationCalculatorImpl implements RotationCalculator {
 
@@ -17,6 +17,8 @@ export class RotationCalculatorImpl implements RotationCalculator {
 
   private startX: number = 0
   private startY: number = 0
+  private lastUpdateTime: number = 0
+  private readonly throttleMs: number = 16 // ~60fps
 
   /**
    * @param centerX - X coordinate of the chart center.
@@ -38,6 +40,13 @@ export class RotationCalculatorImpl implements RotationCalculator {
   }
 
   onUpdate(x: number, y: number) {
+    // Throttle updates to improve performance
+    const now = Date.now()
+    if (now - this.lastUpdateTime < this.throttleMs) {
+      return
+    }
+    this.lastUpdateTime = now
+
     console.log(`Mouse move: (${x.toFixed(2)}, ${y.toFixed(2)})`)
     const angle = this.calculateAngle(x, y)
     console.log(`Calculated angle: ${angle.toFixed(2)}°`)
