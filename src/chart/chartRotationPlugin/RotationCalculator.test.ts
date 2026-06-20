@@ -11,6 +11,11 @@ describe('RotationCalculator.ts', () => {
 
   const tested: RotationCalculator = new RotationCalculatorImpl(500, 200, chartRotation)
 
+  describe('calculateAngle', () => {
+
+    
+  })
+
   describe('onUpdate', () => {
 
     it('should not update the chart for same coordinates', () => {
@@ -28,6 +33,17 @@ describe('RotationCalculator.ts', () => {
       tested.onStart(startX, startY)
       tested.onUpdate(endX, endY)
       expect(chartRotation.rotateChart).not.toHaveBeenCalled()
+    })
+
+    it.each`
+      startX | startY |   endX |   endY | expectedRotation
+      ${500} | ${100} | ${600} | ${200} | ${90}
+      ${600} | ${200} | ${500} | ${100} | ${-90}
+      ${500} | ${100} | ${500} | ${300} | ${180}
+    `('should rotate chart for angle: $expectedRotation', ({ startX, startY, endX, endY, expectedRotation }) => {
+      tested.onStart(startX, startY)
+      tested.onUpdate(endX, endY)
+      expect(chartRotation.rotateChart).toHaveBeenCalledWith(expectedRotation)
     })
   })
 })

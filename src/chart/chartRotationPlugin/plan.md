@@ -34,8 +34,8 @@ Create a new plugin (`chartRotationPlugin`) that allows users to rotate the enti
 
 ### Phase 2: Create Rotation Angle Calculation Function
 
-2. Create `src/chart/chartRotationPlugin/chartRotationAngle.ts`
-   - Function: `calculateRotationDelta(startX: number, startY: number, currentX: number, currentY: number, centerX: number, centerY: number): number`
+2. Create `src/chart/chartRotationPlugin/RotationCalculator.ts`
+   - Function: `calculateAngle(x: number, y: number): number`
    - Returns the angle change (in radians) between start and current mouse positions relative to chart center
    - Uses `Math.atan2()` to calculate angles from chart center to both points
    - Implementation:
@@ -43,7 +43,7 @@ Create a new plugin (`chartRotationPlugin`) that allows users to rotate the enti
      - Calculate vector from center to current position → `currentAngle = atan2(currentY - centerY, currentX - centerX)`
      - Return `currentAngle - startAngle` (positive = counter-clockwise)
 
-3. Create `src/chart/chartRotationPlugin/chartRotationAngle.test.ts`
+3. Create `src/chart/chartRotationPlugin/RotationCalculator.test.ts`
    - Test cases:
      - Rotation from 0° to 90° (quarter turn counter-clockwise) → expect Math.PI/2
      - Rotation from 90° to 0° (quarter turn clockwise) → expect -Math.PI/2
@@ -52,58 +52,6 @@ Create a new plugin (`chartRotationPlugin`) that allows users to rotate the enti
      - Small deltas (sub-degree movements)
      - Rotation across 0° boundary (e.g., from -170° to 170°)
    - Use `vitest` + `expect(...).toBeCloseTo()` for floating point comparisons
-
-4. Update `src/chart/chartRotationPlugin/chartRotationPlugin.ts` (enhance Phase 1 version)
-   - Structure (following `translatedLabelsPlugin` pattern):
-     ```typescript
-     type RotationState = {
-       currentRotation: number  // cumulative rotation in radians
-       isDragging: boolean
-       dragStartX: number
-       dragStartY: number
-     }
-     ```
-   - Plugin object:
-     - `id: 'chartRotation'`
-     - `afterInit` hook: Initialize state, set up event listeners (upgrade from Phase 1 with rotation logic)
-     - `afterDatasetsDraw` hook: Apply rotation transform to canvas
-
-5. Enhance **`afterInit` hook** with rotation calculation:
-   - Initialize rotation state: `{ currentRotation: 0, isDragging: false }`
-   - Keep existing console logging from Phase 1, add:
-   - Add canvas `mousedown` listener:
-     - Set `isDragging = true`, capture start position and chart center
-   - Add document `mousemove` listener (document-level to handle dragging outside canvas):
-     - Calculate delta using `calculateRotationDelta()`
-     - Update `currentRotation += delta`
-     - Call `chart.update()` to trigger re-render
-   - Add document `mouseup` listener:
-     - Set `isDragging = false`
-   - Store listeners in plugin scope so they can be cleaned up if needed
-
-6. Implement **`afterDatasetsDraw` hook**:
-   - Access canvas context: `const ctx = chart.ctx`
-   - Save context state: `ctx.save()`
-   - Get chart center: use `chart.chartArea.left + chart.chartArea.width/2` and `chart.chartArea.top + chart.chartArea.height/2`
-   - Apply rotation transform:
-     ```typescript
-     ctx.translate(centerX, centerY)
-     ctx.rotate(currentRotation)
-     ctx.translate(-centerX, -centerY)
-     ```
-   - Redraw chart elements (or use Chart.js's built-in re-render mechanism)
-   - Restore context: `ctx.restore()`
-
-### Phase 4: Register Plugin and Integration
-
-7. Update `src/chart/chart.ts`:
-   - Import: `import { chartRotationPlugin } from './chartRotationPlugin/chartRotationPlugin'`
-   - Add `chartRotationPlugin` to plugins array in chart config (after or before other plugins)
-
-8. Create `src/chart/chartRotationPlugin/README.md` (optional, for documentation):
-   - Describe plugin purpose
-   - Document interaction (click-drag to rotate)
-   - Note that rotation is cumulative and persists
 
 ## Relevant Files
 

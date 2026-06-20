@@ -39,4 +39,16 @@ export class RotationCalculatorImpl implements RotationCalculator {
   onUpdate(x: number, y: number) {
     console.log(`Mouse move: (${x.toFixed(2)}, ${y.toFixed(2)})`)
   }
+
+  /**
+   * 
+   * 
+   * @param x 
+   * 
+   * @param y 
+   * @returns 
+   */
+   calculateAngle(x: number, y: number): number{
+    return 0
+  }
 }
