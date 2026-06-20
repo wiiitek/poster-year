@@ -5,7 +5,11 @@ import { ChartRotation } from "./ChartRotation"
  * 
  * Based on mouse position calculate the angle of rotation.
  */
-export class RotationCalculator {
+export interface RotationCalculator {
+  onStart(x: number, y: number): void
+  onUpdate(x: number, y: number): void
+}
+export class RotationCalculatorImpl implements RotationCalculator {
 
   // private centerX: number = 0
   // private centerY: number = 0
@@ -22,8 +26,6 @@ export class RotationCalculator {
     console.log(
       `center X: ${centerX.toFixed(2)}, center Y: ${centerY.toFixed(2)}`
     )
-    // this.centerX = canvasRectangle.left + canvasRectangle.width / 2
-    // this.centerY = canvasRectangle.top + canvasRectangle.height / 2
   }
 
   onStart(x: number, y: number) {
