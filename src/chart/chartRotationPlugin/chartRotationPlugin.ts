@@ -18,9 +18,9 @@ export const chartRotationPlugin: Plugin<'doughnut'> = {
 
     const mouseObserver = new MouseObserver(rotationCalculator)
 
-    // Add event listeners
-    document.addEventListener('mousedown', mouseObserver.handleMouseDown)
-    document.addEventListener('mousemove', mouseObserver.handleMouseMove)
-    document.addEventListener('mouseup', mouseObserver.handleMouseUp)
+    // Add pointer event listeners (works with mouse, touch, and pen)
+    document.addEventListener('pointerdown', mouseObserver.handlePointerDown)
+    document.addEventListener('pointermove', mouseObserver.handlePointerMove)
+    document.addEventListener('pointerup', mouseObserver.handlePointerUp)
   },
 }

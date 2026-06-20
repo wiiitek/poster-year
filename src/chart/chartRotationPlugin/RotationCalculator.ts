@@ -17,8 +17,6 @@ export class RotationCalculatorImpl implements RotationCalculator {
 
   private startX: number = 0
   private startY: number = 0
-  private lastUpdateTime: number = 0
-  private readonly throttleMs: number = 16 // ~60fps
 
   /**
    * @param centerX - X coordinate of the chart center.
@@ -40,19 +38,9 @@ export class RotationCalculatorImpl implements RotationCalculator {
   }
 
   onUpdate(x: number, y: number) {
-    // Throttle updates to improve performance
-    const now = Date.now()
-    if (now - this.lastUpdateTime < this.throttleMs) {
-      return
-    }
-    this.lastUpdateTime = now
-
-    console.log(`Mouse move: (${x.toFixed(2)}, ${y.toFixed(2)})`)
     const angle = this.calculateAngle(x, y)
-    console.log(`Calculated angle: ${angle.toFixed(2)}°`)
     if (angle !== 0) {
-      // chart rotations are positive = clockwise
-      this.chartRotation.rotateChart(-angle)
+      this.chartRotation.rotateChart(angle)
     }
   }
 
@@ -77,30 +65,20 @@ export class RotationCalculatorImpl implements RotationCalculator {
       // starting from center of the chart: cannot tell the rotation
       return 0
     } else {
-      const { x: nStartX, y: nStartY } = this.normalizeLength(normalizedStartX, normalizedStartY)
 
       const normalizedCurrentX = x - this.centerX
       const normalizedCurrentY = y - this.centerY
-      const { x: nCurrentX, y: nCurrentY } = this.normalizeLength(normalizedCurrentX, normalizedCurrentY)
 
       // 2. Calculate angles using atan2
-      const startAngle = Math.atan2(nStartY, nStartX)
-      const currentAngle = Math.atan2(nCurrentY, nCurrentX)
+      const startAngle = Math.atan2(normalizedStartY, normalizedStartX) / Math.PI
+      const currentAngle = Math.atan2(normalizedCurrentY, normalizedCurrentX) / Math.PI
 
       // Calculate the difference in radians and convert to degrees
       const angleDelta = startAngle - currentAngle
-      const angleDeltaDegrees = (angleDelta * 180) / Math.PI
+      const angleDeltaDegrees = (angleDelta * 180) 
 
-      return angleDeltaDegrees
-    }
-  }
-
-  normalizeLength(x: number, y: number): { x: number; y: number } {
-    const length = Math.sqrt(x * x + y * y)
-    if (length === 0) {
-      return { x: 0, y: 0 }
-    } else {
-      return { x: x / length, y: y / length }
+      // chart rotations are: positive = clockwise
+      return -angleDeltaDegrees
     }
   }
 }

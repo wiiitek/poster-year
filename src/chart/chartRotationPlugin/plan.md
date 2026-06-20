@@ -41,7 +41,7 @@ Create a new plugin (`chartRotationPlugin`) that allows users to rotate the enti
    - Implementation:
      - Calculate vector from center to start position → `startAngle = atan2(startY - centerY, startX - centerX)`
      - Calculate vector from center to current position → `currentAngle = atan2(currentY - centerY, currentX - centerX)`
-     - Return `currentAngle - startAngle` (positive = counter-clockwise)
+     - Return `currentAngle - startAngle` (positive = clockwise)
 
 3. Create `src/chart/chartRotationPlugin/RotationCalculator.test.ts`
    - Test cases:
