@@ -9,71 +9,38 @@ describe('RotationCalculator.ts', () => {
     rotateChart: vi.fn(),
   }
 
-  const tested: RotationCalculator = new RotationCalculatorImpl(500, 200, chartRotation)
+  let tested: RotationCalculator
 
   beforeEach(() => {
     vi.clearAllMocks()
+    tested = new RotationCalculatorImpl(500, 200, chartRotation)
   })
 
   describe('calculateAngle', () => {
 
-    it('should calculate 90° rotation (counter-clockwise) from right to top', () => {
-      // Canvas center: (500, 200)
-      // Start: (600, 200) - right of center → angle = 0°
-      // End: (500, 100) - top of center → angle = 90°
-      // Expected delta: 90°
-      tested.onStart(600, 200)
-      const angle = tested.calculateAngle(500, 100)
-      expect(angle).toBeCloseTo(-90)
+    it.each`
+      x      | y      |   expected | DIRECTION
+      ${600} | ${200} |       ${0} | ${"EAST"}
+      ${500} | ${100} |     ${-90} | ${"NORTH"}
+      ${500} | ${300} |      ${90} | ${"SOUTH"}
+      ${400} | ${200} |     ${180} | ${"WEST"}
+      ${400} | ${201} | ${179.427} | ${"BELOW-WEST"}
+      ${400} | ${199} |${-179.427} | ${"ABOVE-WEST"}
+    `('should calculate correct angle for $DIRECTION', ({ x, y, expected }) => {
+
+      const actual = tested.calculateAngle(x, y)
+      expect(actual).toBeCloseTo(expected)
     })
 
-    it('should calculate -90° rotation (clockwise) from top to right', () => {
-      // Canvas center: (500, 200)
-      // Start: (500, 100) - top of center → angle = -90°
-      // End: (600, 200) - right of center → angle = 0°
-      // Expected delta: -90°
-      tested.onStart(500, 100)
-      const angle = tested.calculateAngle(600, 200)
-      expect(angle).toBeCloseTo(90)
-    })
-
-    it('should calculate 180° rotation from top to bottom', () => {
-      // Canvas center: (500, 200)
-      // Start: (500, 100) - top of center → angle = -90°
-      // End: (500, 300) - bottom of center → angle = 90°
-      // Expected delta: 180°
-      tested.onStart(500, 100)
-      const angle = tested.calculateAngle(500, 300)
-      expect(Math.abs(angle)).toBeCloseTo(180)
-    })
-
-    it('should calculate angle for 45° counter-clockwise rotation', () => {
-      // Canvas center: (500, 200)
-      // Start: (600, 200) - right of center → angle = 0°
-      // End: approximately (571, 129) 45° right-top
-      // Expected delta: -45°
-      tested.onStart(600, 200)
-      const angle = tested.calculateAngle(571, 129)
-      expect(angle).toBeCloseTo(-45)
-    })
-
-    it('should handle rotations across the 0° boundary', () => {
-      // Canvas center: (500, 200)
-      // Start: (550, 150) - around -45° right-top
-      // End: (550, 250) - around 45° right-bottom
-      // Expected delta: 90° (clockwise)
-      tested.onStart(550, 150)
-      const angle = tested.calculateAngle(550, 250)
-      expect(angle).toBeCloseTo(90)
+    it('should calculate angle for NORTH-WEST', () => {
+      const angle = tested.calculateAngle(400, 100)
+      expect(angle).toBeCloseTo(-135)
     })
 
     it('should calculate small angle changes accurately', () => {
-      // Canvas center: (500, 200)
-      // Start: (600, 200) - right of center
-      // End: (602, 195) - very small rotation
-      tested.onStart(600, 200)
       const angle = tested.calculateAngle(602, 195)
-      expect(Math.abs(angle)).toBeLessThan(10)
+      const angleAbs = Math.abs(angle)
+      expect(angleAbs).toBeLessThan(3)
     })
   })
 
@@ -87,7 +54,8 @@ describe('RotationCalculator.ts', () => {
 
     it.each`
       startX | startY |   endX |   endY | description
-      ${500} | ${200} | ${678} | ${345} | ${"starting from center"}
+      ${500} | ${200} | ${500} | ${200} | ${"stay in center"}
+      ${123} | ${456} | ${123} | ${456} | ${"stay in same point"}
       ${123} | ${200} | ${456} | ${200} | ${"vertical movement in the middle of the chart"}
     `('should not update for same angle ($description)', ({ startX, startY, endX, endY, description }) => {
       tested.onStart(startX, startY)

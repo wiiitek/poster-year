@@ -34,14 +34,10 @@ export class RotationCalculatorImpl implements RotationCalculator {
 
   onUpdate(x: number, y: number) {
     const currentAngle = this.calculateAngle(x, y)
-    const angleDelta = this.previousAngle - currentAngle
-    const angleDeltaDegrees = (angleDelta * 180)
-
-    if (angleDeltaDegrees !== 0) {
-      // chart rotations are: positive = clockwise
-      this.chartRotation.rotateChart(-angleDeltaDegrees)
+    const angleDelta = currentAngle - this.previousAngle
+    if (angleDelta !== 0) {
+      this.chartRotation.rotateChart(angleDelta)
     }
-
     this.previousAngle = currentAngle
   }
 
@@ -55,11 +51,11 @@ export class RotationCalculatorImpl implements RotationCalculator {
    * 
    * @param x - Current X coordinate
    * @param y - Current Y coordinate
-   * @returns Angle in radians, divided by PI
+   * @returns Angle in degrees
    */
   calculateAngle(x: number, y: number): number {
     const normalizedX = x - this.centerX
     const normalizedY = y - this.centerY
-    return Math.atan2(normalizedY, normalizedX) / Math.PI
+    return 180 * Math.atan2(normalizedY, normalizedX) / Math.PI
   }
 }
