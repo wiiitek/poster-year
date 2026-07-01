@@ -18,6 +18,14 @@ test.describe('Poster Screenshot Tests', () => {
       await page.waitForTimeout(50) // 50ms pause (adjust if needed)
     }
 
+    // Rotates chart even more left with a mouse
+    await page.mouse.move(800, 400)
+    await page.mouse.down()
+    await page.mouse.move(750, 350)
+    await page.mouse.up()
+    // Moves mouse to the month
+    await page.mouse.move(600, 200)
+
     // Take a screenshot and compare to snapshot
     await expect(page).toHaveScreenshot('poster-page.png', {
       fullPage: true,
