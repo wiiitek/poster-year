@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 
-import { MouseObserver } from './MouseObserver';
-import { RotationCalculator } from './RotationCalculator';
+import { MouseObserver } from './MouseObserver'
+import { RotationCalculator } from './RotationCalculator'
 
 describe('MouseObserver', () => {
 
@@ -19,13 +19,13 @@ describe('MouseObserver', () => {
     tested.handlePointerDown(mockEvent)
 
     expect(mouseActions.onStart).toHaveBeenCalledWith(100, 200)
-  });
+  })
 
   it('should handle mouse up event', () => {
     const mockEvent = { clientX: 100, clientY: 200 } as PointerEvent
 
-    tested.handlePointerUp(mockEvent);
+    tested.handlePointerUp(mockEvent)
 
-    expect(mouseActions.onUpdate).toHaveBeenCalledWith(100, 200);
-  });
-});
+    expect(mouseActions.onUpdate).toHaveBeenCalledWith(100, 200)
+  })
+})

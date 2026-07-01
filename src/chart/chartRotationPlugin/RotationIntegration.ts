@@ -1,4 +1,4 @@
-import { Chart, Plugin } from 'chart.js'
+import { Chart } from 'chart.js'
 
 import { Label } from '../Label'
 

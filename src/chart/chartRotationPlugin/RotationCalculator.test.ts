@@ -51,7 +51,7 @@ describe('RotationCalculator.ts', () => {
       ${500} | ${200} | ${500} | ${200} | ${"stay in center"}
       ${123} | ${456} | ${123} | ${456} | ${"stay in same point"}
       ${123} | ${200} | ${456} | ${200} | ${"vertical movement in the middle of the chart"}
-    `('should not update for same angle ($description)', ({ startX, startY, endX, endY, description }) => {
+    `('should not update for same angle ($description)', ({ startX, startY, endX, endY }) => {
       tested.onStart(startX, startY)
       tested.onUpdate(endX, endY)
       expect(rotationIntegration.rotateChart).not.toHaveBeenCalled()
