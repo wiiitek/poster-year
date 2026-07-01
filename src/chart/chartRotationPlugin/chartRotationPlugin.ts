@@ -9,12 +9,12 @@ export const chartRotationPlugin: Plugin<'doughnut'> = {
 
   afterInit(chart: Chart<'doughnut', number[], Label[]>) {
 
-    const rotationIntegration: RotationIntegration = new RotationIntegrationImpl(chart)
+    const chartRotation: RotationIntegration = new RotationIntegrationImpl(chart)
 
     const canvasRectangle: DOMRect = chart.canvas.getBoundingClientRect()
     const centerX = canvasRectangle.left + canvasRectangle.width / 2
     const centerY = canvasRectangle.top + canvasRectangle.height / 2
-    const rotationCalculator: RotationCalculator = new RotationCalculatorImpl(centerX, centerY, rotationIntegration)
+    const rotationCalculator: RotationCalculator = new RotationCalculatorImpl(centerX, centerY, chartRotation)
 
     const mouseObserver = new MouseObserver(rotationCalculator)
 
@@ -22,5 +22,7 @@ export const chartRotationPlugin: Plugin<'doughnut'> = {
     document.addEventListener('pointerdown', mouseObserver.handlePointerDown)
     document.addEventListener('pointermove', mouseObserver.handlePointerMove)
     document.addEventListener('pointerup', mouseObserver.handlePointerUp)
-  },
+
+    chart.canvas.style.cursor = 'grab'
+  }
 }

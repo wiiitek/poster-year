@@ -27,9 +27,6 @@ export class RotationCalculatorImpl implements RotationCalculator {
 
   onStart(x: number, y: number) {
     this.previousAngle = this.calculateAngle(x, y)
-    console.log(
-      `Gesture start: mouse down at (${x.toFixed(2)}, ${y.toFixed(2)})`
-    )
   }
 
   onUpdate(x: number, y: number) {
@@ -37,10 +34,10 @@ export class RotationCalculatorImpl implements RotationCalculator {
     const angleDelta = currentAngle - this.previousAngle
     let rotation = angleDelta
 
-    if (angleDelta > 300) {
+    if (angleDelta > 180) {
       // then let's rotate the other way around, to avoid a big jump
       rotation = angleDelta - 360
-    } else if (angleDelta < -300) {
+    } else if (angleDelta < -180) {
       // then let's rotate the other way around, to avoid a big jump
       rotation = angleDelta + 360
     }

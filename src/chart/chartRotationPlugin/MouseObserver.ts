@@ -39,18 +39,16 @@ export class MouseObserver {
   }
 
   handlePointerUp = (event: PointerEvent) => {
-    this.isPressed = false
-    const { x, y } = this.getPointerCoordinates(event)
-    
-    // Cancel any pending animation callback
-    if (this.rafId !== null) {
-      cancelAnimationFrame(this.rafId)
-      this.rafId = null
+    if (this.isPressed) {
+      this.isPressed = false
+      const { x, y } = this.getPointerCoordinates(event)
+      // Cancel any pending animation callback
+      if (this.rafId !== null) {
+        cancelAnimationFrame(this.rafId)
+        this.rafId = null
+      }
+      // Final update at current position
+      this.mouseActions.onUpdate(x, y)
     }
-    
-    // Final update at current position
-    this.mouseActions.onUpdate(x, y)
   }
 }
-
-

@@ -13,7 +13,7 @@ export class RotationIntegrationImpl implements RotationIntegration {
   rotateChart(degrees: number) {
     const currentRotation = this.chart.options.rotation || 0
     const newRotation = currentRotation + degrees
-    console.log(`Rotating chart from ${currentRotation.toFixed(2)}° to ${newRotation.toFixed(2)}°`)
+    // https://www.chartjs.org/docs/latest/api/interfaces/DoughnutControllerChartOptions.html#rotation
     this.chart.options.rotation = newRotation
     this.chart.update()
   }
