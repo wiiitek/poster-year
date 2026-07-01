@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 import { RotationCalculator, RotationCalculatorImpl } from './RotationCalculator'
-import { RotatingEngine } from './RotatingEngine'
+import { RotationIntegration } from './RotationIntegration'
 
 describe('RotationCalculator.ts', () => {
 
-  const chartRotation: RotatingEngine = {
+  const rotationIntegration: RotationIntegration = {
     rotateChart: vi.fn(),
   }
 
@@ -13,7 +13,7 @@ describe('RotationCalculator.ts', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    tested = new RotationCalculatorImpl(500, 200, chartRotation)
+    tested = new RotationCalculatorImpl(500, 200, rotationIntegration)
   })
 
   describe('calculateAngle', () => {
@@ -54,7 +54,7 @@ describe('RotationCalculator.ts', () => {
     `('should not update for same angle ($description)', ({ startX, startY, endX, endY, description }) => {
       tested.onStart(startX, startY)
       tested.onUpdate(endX, endY)
-      expect(chartRotation.rotateChart).not.toHaveBeenCalled()
+      expect(rotationIntegration.rotateChart).not.toHaveBeenCalled()
     })
 
     it.each`
@@ -65,21 +65,21 @@ describe('RotationCalculator.ts', () => {
     `('should rotate chart for angle: $expectedRotation', ({ startX, startY, endX, endY, expectedRotation }) => {
       tested.onStart(startX, startY)
       tested.onUpdate(endX, endY)
-      expect(chartRotation.rotateChart).toHaveBeenCalledWith(expectedRotation)
+      expect(rotationIntegration.rotateChart).toHaveBeenCalledWith(expectedRotation)
     })
 
     it('should correctly recognize small rotation at the edge', () => {
       // when we rotate from below WEST to above WEST
       tested.onStart(400, 201)
       tested.onUpdate(400, 199)
-      expect(chartRotation.rotateChart).toHaveBeenCalledWith(1.1458773953669947)
+      expect(rotationIntegration.rotateChart).toHaveBeenCalledWith(1.1458773953669947)
     })
 
     it('should correctly recognize small rotation at the edge', () => {
       // when we rotate from above WEST to below WEST
       tested.onStart(400, 199)
       tested.onUpdate(400, 201)
-      expect(chartRotation.rotateChart).toHaveBeenCalledWith(-1.1458773953669947)
+      expect(rotationIntegration.rotateChart).toHaveBeenCalledWith(-1.1458773953669947)
     })
   })
 })

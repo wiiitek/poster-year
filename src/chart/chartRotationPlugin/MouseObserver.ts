@@ -42,7 +42,7 @@ export class MouseObserver {
     this.isPressed = false
     const { x, y } = this.getPointerCoordinates(event)
     
-    // Cancel any pending RAF callback
+    // Cancel any pending animation callback
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId)
       this.rafId = null

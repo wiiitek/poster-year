@@ -1,4 +1,4 @@
-import { RotatingEngine } from "./RotatingEngine"
+import { RotationIntegration } from "./RotationIntegration"
 
 /**
  * Calculates the rotation of a chart based on mouse positions.
@@ -17,9 +17,9 @@ export class RotationCalculatorImpl implements RotationCalculator {
   /**
    * @param centerX - X coordinate of the chart center.
    * @param centerY - Y coordinate of the chart center.
-   * @param chartRotation - Wrapper for chart to perform rotations.
+   * @param rotatingEngine - Wrapper for chart to perform rotations.
    */
-  constructor(private centerX: number, private centerY: number, private chartRotation: RotatingEngine) {
+  constructor(private centerX: number, private centerY: number, private rotatingEngine: RotationIntegration) {
     console.log(
       `center X: ${centerX.toFixed(2)}, center Y: ${centerY.toFixed(2)}`
     )
@@ -46,7 +46,7 @@ export class RotationCalculatorImpl implements RotationCalculator {
     }
 
     if (rotation !== 0) {
-      this.chartRotation.rotateChart(rotation)
+      this.rotatingEngine.rotateChart(rotation)
     }
     this.previousAngle = currentAngle
   }
