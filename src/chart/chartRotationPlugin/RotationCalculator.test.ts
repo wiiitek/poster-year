@@ -46,12 +46,6 @@ describe('RotationCalculator.ts', () => {
 
   describe('onUpdate', () => {
 
-    it('should not update the chart for same coordinates', () => {
-      tested.onStart(500, 200)
-      tested.onUpdate(600, 200)
-      expect(chartRotation.rotateChart).not.toHaveBeenCalled()
-    })
-
     it.each`
       startX | startY |   endX |   endY | description
       ${500} | ${200} | ${500} | ${200} | ${"stay in center"}
@@ -72,6 +66,20 @@ describe('RotationCalculator.ts', () => {
       tested.onStart(startX, startY)
       tested.onUpdate(endX, endY)
       expect(chartRotation.rotateChart).toHaveBeenCalledWith(expectedRotation)
+    })
+
+    it('should correctly recognize small rotation at the edge', () => {
+      // when we rotate from below WEST to above WEST
+      tested.onStart(400, 201)
+      tested.onUpdate(400, 199)
+      expect(chartRotation.rotateChart).toHaveBeenCalledWith(1.1458773953669947)
+    })
+
+    it('should correctly recognize small rotation at the edge', () => {
+      // when we rotate from above WEST to below WEST
+      tested.onStart(400, 199)
+      tested.onUpdate(400, 201)
+      expect(chartRotation.rotateChart).toHaveBeenCalledWith(-1.1458773953669947)
     })
   })
 })

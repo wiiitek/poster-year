@@ -35,8 +35,18 @@ export class RotationCalculatorImpl implements RotationCalculator {
   onUpdate(x: number, y: number) {
     const currentAngle = this.calculateAngle(x, y)
     const angleDelta = currentAngle - this.previousAngle
-    if (angleDelta !== 0) {
-      this.chartRotation.rotateChart(angleDelta)
+    let rotation = angleDelta
+
+    if (angleDelta > 300) {
+      // then let's rotate the other way around, to avoid a big jump
+      rotation = angleDelta - 360
+    } else if (angleDelta < -300) {
+      // then let's rotate the other way around, to avoid a big jump
+      rotation = angleDelta + 360
+    }
+
+    if (rotation !== 0) {
+      this.chartRotation.rotateChart(rotation)
     }
     this.previousAngle = currentAngle
   }
