@@ -13,7 +13,7 @@ describe('MouseObserver', () => {
 
   const tested = new MouseObserver(mouseActions)
 
-  it('should track mouse position on move', () => {
+  it('should handle mouse down event', () => {
     const mockEvent = { clientX: 100, clientY: 200 } as PointerEvent
 
     tested.handlePointerDown(mockEvent)
@@ -21,7 +21,7 @@ describe('MouseObserver', () => {
     expect(mouseActions.onStart).toHaveBeenCalledWith(100, 200)
   });
 
-  it('should update once for mouse up', () => {
+  it('should handle mouse up event', () => {
     const mockEvent = { clientX: 100, clientY: 200 } as PointerEvent
 
     tested.handlePointerUp(mockEvent);
