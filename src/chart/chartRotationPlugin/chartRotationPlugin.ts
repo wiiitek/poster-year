@@ -1,6 +1,6 @@
 import { Chart, Plugin } from 'chart.js'
 import { Label } from '../Label'
-import { ChartRotation, ChartRotationImpl } from './ChartRotation'
+import { RotatingEngine, RotatingEngineImpl } from './RotatingEngine'
 import { RotationCalculator, RotationCalculatorImpl } from './RotationCalculator'
 import { MouseObserver } from './MouseObserver'
 
@@ -9,7 +9,7 @@ export const chartRotationPlugin: Plugin<'doughnut'> = {
 
   afterInit(chart: Chart<'doughnut', number[], Label[]>) {
 
-    const chartRotation: ChartRotation = new ChartRotationImpl(chart)
+    const chartRotation: RotatingEngine = new RotatingEngineImpl(chart)
 
     const canvasRectangle: DOMRect = chart.canvas.getBoundingClientRect()
     const centerX = canvasRectangle.left + canvasRectangle.width / 2

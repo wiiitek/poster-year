@@ -2,11 +2,11 @@ import { Chart, Plugin } from 'chart.js'
 
 import { Label } from '../Label'
 
-export interface ChartRotation {
+export interface RotatingEngine {
   rotateChart(degrees: number): void
 }
 
-export class ChartRotationImpl implements ChartRotation {
+export class RotatingEngineImpl implements RotatingEngine {
 
   constructor(private chart: Chart<"doughnut", number[], Label[]>) { }
 

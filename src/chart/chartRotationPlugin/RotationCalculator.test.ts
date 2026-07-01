@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 import { RotationCalculator, RotationCalculatorImpl } from './RotationCalculator'
-import { ChartRotation } from './ChartRotation'
+import { RotatingEngine } from './RotatingEngine'
 
 describe('RotationCalculator.ts', () => {
 
-  const chartRotation: ChartRotation = {
+  const chartRotation: RotatingEngine = {
     rotateChart: vi.fn(),
   }
 
