@@ -1,6 +1,7 @@
 {
   "name": "poster",
   "version": "1.0.0",
+  "type": "module",
   "description": "A4 landscape page poster project with TypeScript and CSS",
   "scripts": {
     "start": "vite",
