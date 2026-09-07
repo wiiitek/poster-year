@@ -1,6 +1,7 @@
 {
   "name": "poster",
   "version": "1.0.0",
+  "type": "module",
   "description": "A4 landscape page poster project with TypeScript and CSS",
   "scripts": {
     "start": "vite",
@@ -24,7 +25,7 @@
     "@eslint/js": "9.39.2",
     "@playwright/test": "1.62.1",
     "@types/node": "24.13.3",
-    "@vitest/ui": "4.1.11",
+    "@vitest/ui": "5.0.0",
     "eslint": "10.9.1",
     "http-server": "14.1.1",
     "jsdom": "30.0.1",
@@ -32,7 +33,7 @@
     "typescript": "6.0.3",
     "typescript-eslint": "8.69.0",
     "vite": "8.2.2",
-    "vitest": "4.1.11"
+    "vitest": "5.0.0"
   },
   "dependencies": {
     "chart.js": "4.5.1",
