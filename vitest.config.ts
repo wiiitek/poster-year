@@ -11,6 +11,10 @@ export default defineConfig({
     // Exclude directories
     exclude: ['node_modules', 'dist', 'playwright-report', 'test-results'],
     // Coverage configuration
+    reporters: ['default', 'junit'],
+    outputFile: {
+      junit: 'test-results/vitest-junit.xml'
+    },
     coverage: {
       reporter: ['text', 'html'],
       include: ['src/**/*'],

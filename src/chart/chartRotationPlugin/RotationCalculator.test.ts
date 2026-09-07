@@ -12,7 +12,6 @@ describe('RotationCalculator.ts', () => {
   let tested: RotationCalculator
 
   beforeEach(() => {
-    //vi.clearAllMocks()
     tested = new RotationCalculatorImpl(500, 200, rotationIntegration)
   })
 
