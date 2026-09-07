@@ -7,7 +7,7 @@ export default defineConfig({
   outputDir: 'test-results/playwright',
   reporter: [
     ['junit', { outputFile: 'test-results/playwright/playwright-junit.xml' }],
-    ['html', { open: 'never', outputFolder: 'test-results/playwright/html' }],
+    ['html', { open: 'never', outputFolder: 'test-results/playwright-html' }],
   ],
   use: {
     baseURL: 'http://localhost:8080',

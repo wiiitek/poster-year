@@ -68,6 +68,6 @@ jobs:
         uses: dorny/test-reporter@v3
         if: ${{ !cancelled() }}
         with:
-          name: Playwright Tests
-          path: test-results/junit.xml
-          reporter: jest-junit
+          name: Unit and Playwright Tests
+          path: test-results/vitest-junit.xml,test-results/playwright/playwright-junit.xml
+          reporter: java-junit
