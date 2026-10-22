@@ -39,6 +39,6 @@
     "chart.js": "4.5.1",
     "i18next": "26.5.2",
     "i18next-browser-languagedetector": "8.2.1",
-    "i18next-http-backend": "4.0.3"
+    "i18next-http-backend": "4.0.4"
   }
 }
