@@ -37,8 +37,8 @@
   },
   "dependencies": {
     "chart.js": "4.6.1",
-    "i18next": "27.2.2",
+    "i18next": "27.2.4",
     "i18next-browser-languagedetector": "8.3.1",
-    "i18next-http-backend": "4.1.0"
+    "i18next-http-backend": "4.1.1"
   }
 }
